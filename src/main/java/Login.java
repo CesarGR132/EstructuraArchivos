@@ -37,6 +37,8 @@ public class Login extends javax. swing.JFrame {
         btnLogin = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         btnExit = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBounds(new java.awt.Rectangle(1132, 740, 740, 740));
@@ -48,39 +50,39 @@ public class Login extends javax. swing.JFrame {
 
         txtUsuario.setForeground(new java.awt.Color(255, 255, 255));
         getContentPane().add(txtUsuario);
-        txtUsuario.setBounds(70, 230, 300, 30);
+        txtUsuario.setBounds(30, 290, 300, 30);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Contraseña");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(160, 290, 110, 22);
+        jLabel1.setBounds(120, 350, 110, 22);
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 30)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("INICIO DE SESIÓN");
+        jLabel2.setText("PSICOANALISTA SCHOOL");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(110, 80, 240, 22);
+        jLabel2.setBounds(600, 70, 400, 30);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Usuario");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(180, 190, 80, 22);
+        jLabel3.setBounds(140, 250, 80, 22);
         getContentPane().add(txtPassword);
-        txtPassword.setBounds(70, 330, 300, 30);
+        txtPassword.setBounds(30, 390, 300, 30);
 
         btnLogin.setBackground(new java.awt.Color(55, 151, 119));
         btnLogin.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
         btnLogin.setForeground(new java.awt.Color(255, 255, 255));
         btnLogin.setText("Ingresar");
         getContentPane().add(btnLogin);
-        btnLogin.setBounds(70, 420, 300, 40);
+        btnLogin.setBounds(30, 460, 300, 40);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel4.setText("------------------------------------------------");
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(110, 110, 260, 16);
+        jLabel4.setBounds(70, 180, 260, 16);
 
         btnExit.setBackground(new java.awt.Color(255, 0, 0));
         btnExit.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -93,6 +95,16 @@ public class Login extends javax. swing.JFrame {
         });
         getContentPane().add(btnExit);
         btnExit.setBounds(1060, 20, 50, 40);
+
+        jLabel6.setIcon(new javax.swing.ImageIcon("C:\\Users\\cesar\\Documents\\Universidad_UNEDL\\4tosemestre\\Estructura_archivos\\EstructuraArchivos\\src\\main\\resources\\img\\rezise.png")); // NOI18N
+        getContentPane().add(jLabel6);
+        jLabel6.setBounds(250, 70, 900, 640);
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("INICIO DE SESIÓN");
+        getContentPane().add(jLabel5);
+        jLabel5.setBounds(70, 150, 240, 22);
 
         pack();
         setLocationRelativeTo(null);
@@ -136,6 +148,8 @@ public class Login extends javax. swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
