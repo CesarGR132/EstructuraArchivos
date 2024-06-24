@@ -7,28 +7,36 @@
         "Materias": {
             "Primer semestre": "Matematicas",
             "Cuarto semestre": "Fisica"
-          }
+          },
+        "Usuaro": "cesar",
+        "Contraseña": "123"
         },
         {
         "Nombre": "Bryan Omar Mayoral Gonzales",
         "Edad": 30,
         "Materias": {
             "Segundo": "Estructura archivos"
-          }
+        },
+        "Usuaro": "bryan",
+        "Contraseña": "bryan123"
     },
     {
         "Nombre": "Jessica Ponce Aguilera",
         "Edad": 27,
         "Materias": {
             "Tercer semestre": "Programación"
-          }
+          },
+        "Usuaro": "jessica",
+        "Contraseña": "jessica123"
     },
     {
       "Nombre": "Kevin Quiñones Gonzales",
       "Edad": 37,
       "Materias": {
         "Quinto semestre": "Base de datos"
-      }
+      },
+      "Usuaro": "kevin",
+      "Contraseña": "kevin123"
     }
   ]
 }
