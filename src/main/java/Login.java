@@ -11,7 +11,7 @@ import javax.swing.*;
  *
  * @author cesar
  */
-public class Login extends javax.swing.JFrame {
+public class Login extends javax. swing.JFrame {
 
     /**
      * Creates new form Login
@@ -36,12 +36,14 @@ public class Login extends javax.swing.JFrame {
         txtPassword = new javax.swing.JPasswordField();
         btnLogin = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        btnExit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBounds(new java.awt.Rectangle(1000, 650, 650, 650));
-        setMaximumSize(new java.awt.Dimension(1000, 650));
-        setMinimumSize(new java.awt.Dimension(1000, 650));
-        setSize(new java.awt.Dimension(1000, 650));
+        setBounds(new java.awt.Rectangle(1132, 740, 740, 740));
+        setMaximumSize(new java.awt.Dimension(1132, 740));
+        setMinimumSize(new java.awt.Dimension(1132, 740));
+        setUndecorated(true);
+        setSize(new java.awt.Dimension(1132, 740));
         getContentPane().setLayout(null);
 
         txtUsuario.setForeground(new java.awt.Color(255, 255, 255));
@@ -78,11 +80,30 @@ public class Login extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel4.setText("------------------------------------------------");
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(110, 110, 230, 16);
+        jLabel4.setBounds(110, 110, 260, 16);
+
+        btnExit.setBackground(new java.awt.Color(255, 0, 0));
+        btnExit.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnExit.setForeground(new java.awt.Color(255, 255, 255));
+        btnExit.setText("X");
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExitActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnExit);
+        btnExit.setBounds(1060, 20, 50, 40);
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        int option = JOptionPane.showConfirmDialog(null, "¿Estás seguro que deseas salir?", "Salir", JOptionPane.YES_NO_OPTION);
+        if (option == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
+    }//GEN-LAST:event_btnExitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -109,6 +130,7 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnExit;
     private javax.swing.JButton btnLogin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
