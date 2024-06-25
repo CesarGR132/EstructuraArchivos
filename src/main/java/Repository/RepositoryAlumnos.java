@@ -8,6 +8,6 @@ package Repository;
  *
  * @author Bryan Mayoral
  */
-public class RepositoryAlumnos {
+public interface RepositoryAlumnos {
     
 }

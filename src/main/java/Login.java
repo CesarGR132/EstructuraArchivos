@@ -12,7 +12,6 @@ import javax.swing.*;
  * @author cesar
  */
 public class Login extends javax. swing.JFrame {
-
     /**
      * Creates new form Login
      */
@@ -96,7 +95,7 @@ public class Login extends javax. swing.JFrame {
         getContentPane().add(btnExit);
         btnExit.setBounds(1060, 20, 50, 40);
 
-        jLabel6.setIcon(new javax.swing.ImageIcon("C:\\Users\\cesar\\Documents\\Universidad_UNEDL\\4tosemestre\\Estructura_archivos\\EstructuraArchivos\\src\\main\\resources\\img\\rezise.png")); // NOI18N
+        jLabel6.setIcon(new javax.swing.ImageIcon("src/main/java/resources/img/rezise.png")); // NOI18N
         getContentPane().add(jLabel6);
         jLabel6.setBounds(250, 70, 900, 640);
 
