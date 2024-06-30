@@ -1,0 +1,22 @@
+{
+  "credentials": [
+    {
+      "matricula": "123456",
+      "user": "cesar123",
+      "password": "abc123",
+      "token": "alumno"
+    },
+    {
+      "matricula": "789012",
+      "user": "jessica789",
+      "password": "def456",
+      "token": "maestro"
+    },
+    {
+      "matricula": "345678",
+      "user": "kevin345",
+      "password": "atlas123",
+      "token": "administrativo"
+    }
+  ]
+}

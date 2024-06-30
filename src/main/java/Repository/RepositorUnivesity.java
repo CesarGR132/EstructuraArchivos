@@ -8,6 +8,6 @@ package Repository;
  *
  * @author Bryan Mayoral
  */
-public interface RepositoryAlumnos {
-    
+public interface RepositorUnivesity {
+    String login(String username, String password);
 }
