@@ -1,22 +1,76 @@
 {
   "credentials": [
     {
-      "matricula": "123456",
+      "Matricula": "CE2022MA450M",
       "user": "cesar123",
       "password": "abc123",
-      "token": "alumno"
+      "token": "maestro"
     },
     {
-      "matricula": "789012",
+      "Matricula": "JE2022PO360M",
       "user": "jessica789",
       "password": "def456",
       "token": "maestro"
     },
     {
-      "matricula": "345678",
+      "Matricula": "KE2022QU370M",
       "user": "kevin345",
       "password": "atlas123",
-      "token": "administrativo"
+      "token": "maestro"
+    },
+    {
+      "Matricula" : "JO2021D234A",
+      "user" : "john123",
+      "password" : "doe123",
+      "token" : "alumno"
+    },
+    {
+      "Matricula" : "MA2020D235A",
+      "user" : "mary123",
+      "password" : "jane123",
+      "token" : "alumno"
+    },
+    {
+      "Matricula": "PE2020D236A",
+      "user": "peter123",
+      "password": "parker",
+      "token": "alumno"
+    },
+    {
+      "Matricula": "BR2020D237A",
+      "user": "bruce123",
+      "password": "wayne123",
+      "token": "alumno"
+    },
+    {
+      "Matricula": "CL2020D238A",
+      "user": "clark123",
+      "password": "kent123",
+      "token": "alumno"
+    },
+    {
+      "Matricula": "BA2020D239A",
+      "user": "barry123",
+      "password": "allen123",
+      "token": "alumno"
+    },
+    {
+     "Matricula": "DI2020D240A",
+      "user": "diana123",
+      "password": "prince123",
+      "token": "alumno"
+    },
+    {
+      "Matricula": "HA2020D241A",
+      "user": "hal123",
+      "password": "jordan123",
+      "token": "alumno"
+    },
+    {
+      "Matricula": "KA2020D242A",
+      "user": "kara123",
+      "password": "zor123",
+      "token": "alumno"
     }
   ]
 }

@@ -1,21 +1,30 @@
 package models.Tokens;
 
-abstract public class token {
+abstract public class Token {
+    private String token;
     private String matricula;
     private String nombre;
     private String edad;
 
 
-    public token() {
+    public Token() {
     }
 
-    public token(String matricula, String nombre, String edad) {
+    public Token(String token, String matricula, String nombre, String edad) {
+        this.token = token;
         this.matricula = matricula;
         this.nombre = nombre;
         this.edad = edad;
+
     }
 
+    public String getToken() {
+        return token;
+    }
 
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public String getMatricula() {
         return matricula;
@@ -40,4 +49,6 @@ abstract public class token {
     public void setEdad(String edad) {
         this.edad = edad;
     }
+
+    public abstract void initInformation(String matricula);
 }

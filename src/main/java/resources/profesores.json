@@ -6,8 +6,8 @@
         "Nombre": "Cesar Gabriel Mariscal Ruiz",
         "Edad": 25,
         "Materias": {
-            "Primer semestre": "Matematicas",
-            "Cuarto semestre": "Fisica"
+            "1": "Matematicas",
+            "2": "Fisica"
           }
     },
         {
@@ -15,7 +15,7 @@
         "Nombre": "Bryan Omar Mayoral Gonzales",
         "Edad": 30,
         "Materias": {
-            "Segundo": "Estructura archivos"
+            "1": "Estructura archivos"
         }
     },
     {
@@ -23,7 +23,7 @@
         "Nombre": "Jessica Ponce Aguilera",
         "Edad": 27,
         "Materias": {
-            "Tercer semestre": "Programación 2"
+            "1": "Programación 2"
           }
     },
     {
@@ -31,7 +31,7 @@
       "Nombre": "Kevin Quiñones Gonzales",
       "Edad": 37,
       "Materias": {
-        "Quinto semestre": "Base de datos"
+        "1": "Base de datos"
       }
     }
 

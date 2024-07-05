@@ -34,7 +34,11 @@ public class Subject {
         return grades;
     }
 
-    public void setGrades(HashMap<String, Double> grades) {
-        this.grades = grades;
+    public void setGrades(String key, Double score) {
+        if (this.grades.containsKey(key)){
+            this.grades.put(key, score);
+        }else{
+            System.out.println("Something went wrong, please try again.");
+        }
     }
 }

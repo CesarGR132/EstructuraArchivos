@@ -4,74 +4,55 @@
       "Matricula" : "JO2021D234A",
       "Nombre": "John Doe",
       "Semestre": 1,
-      "Edad": 20,
-      "Materias": [
-        {
-            "Nombre": "Matematicas",
-            "Calificaciones": {
-              "Primer Parcial": 10,
-              "Segundo Parcial": 9,
-              "Tercer Parcial": 8
-            }
-        },
-        {
-          "Nombre": "Fisica",
-          "Calificaciones": {
-            "Primer Parcial": 9,
-            "Segundo Parcial": 8,
-            "Tercer Parcial": 7
-          }
-        }
-      ]
+      "Edad": 20
     },
     {
       "Matricula" : "MA2020D235A",
       "Nombre": "Mary Jane",
       "Semestre": 2,
-      "Edad": 21,
-        "Materias": [
-            {
-                "Nombre": "Estructura de datos",
-                "Calificaciones": {
-                "Primer Parcial": 10,
-                "Segundo Parcial": 9,
-                "Tercer Parcial": 8
-                }
-            },
-            {
-            "Nombre": "Programación 1",
-            "Calificaciones": {
-                "Primer Parcial": 9,
-                "Segundo Parcial": 8,
-                "Tercer Parcial": 7
-            }
-            }
-        ]
+      "Edad": 21
     },
     {
       "Matricula": "PE2020D236A",
       "Nombre": "Peter Parker",
       "Semestre": 3,
-      "Edad": 22,
-        "Materias": [
-            {
-            "Nombre": "Programación 2",
-            "Calificaciones": {
-                "Primer Parcial": 10,
-                "Segundo Parcial": 9,
-                "Tercer Parcial": 8
-            }
-            },
-            {
-            "Nombre": "Base de datos",
-            "Calificaciones": {
-                "Primer Parcial": 9,
-                "Segundo Parcial": 8,
-                "Tercer Parcial": 7
-            }
-            }
-        ]
-
+      "Edad": 22
+    },
+    {
+        "Matricula": "BR2020D237A",
+        "Nombre": "Bruce Wayne",
+        "Semestre": 4,
+        "Edad": 23
+    },
+    {
+        "Matricula": "CL2020D238A",
+        "Nombre": "Clark Kent",
+        "Semestre": 1,
+        "Edad": 24
+    },
+    {
+        "Matricula": "BA2020D239A",
+        "Nombre": "Barry Allen",
+        "Semestre": 2,
+        "Edad": 25
+    },
+    {
+        "Matricula": "DI2020D240A",
+        "Nombre": "Diana Prince",
+        "Semestre": 3,
+        "Edad": 26
+    },
+    {
+        "Matricula": "HA2020D241A",
+        "Nombre": "Hal Jordan",
+        "Semestre": 4,
+        "Edad": 27
+    },
+    {
+        "Matricula": "KA2020D242A",
+        "Nombre": "Kara Zor-El",
+        "Semestre": 1,
+        "Edad": 28
     }
   ]
 }

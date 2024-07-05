@@ -1,5 +1,6 @@
 package Repository;
 
+import models.Key;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -9,10 +10,11 @@ import java.io.File;
 import java.io.FileReader;
 
 public class operations implements RepositorUnivesity{
+
     @Override
-    public String login(String username, String password) {
+    public Key login(String username, String password) {
         File credentials = new File("src/main/java/resources/credenciales.json");
-        String token = null;
+        Key tokenKey = new Key();
 
         try{
             JSONParser parser = new JSONParser();
@@ -22,7 +24,8 @@ public class operations implements RepositorUnivesity{
             for (Object key : keys) {
                 JSONObject credential = (JSONObject) key;
                 if (credential.get("user").equals(username) && credential.get("password").equals(password)){
-                    token = (String) credential.get("token");
+                    tokenKey.setToken((String) credential.get("token"));
+                    tokenKey.setMatricula((String) credential.get("Matricula"));
                 }
             }
         }catch (Exception e){
@@ -30,6 +33,6 @@ public class operations implements RepositorUnivesity{
             System.out.println(e.getMessage());
         }
 
-        return token;
+        return tokenKey;
     }
 }

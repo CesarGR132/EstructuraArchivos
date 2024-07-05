@@ -1,0 +1,104 @@
+{
+  "Materias": [
+    {
+      "Nombre": "Matematicas",
+      "Instructor": "Cesar Gabriel Mariscal Ruiz",
+      "Semestre" : 1,
+      "Alumnos": [
+        {
+          "Jonh Doe":{
+              "Primer Parcial": 10,
+              "Segundo Parcial": 9,
+              "Tercer Parcial": 8
+          },
+            "Clark Kent":{
+                "Primer Parcial": 93,
+                "Segundo Parcial": 89,
+                "Tercer Parcial": 70
+            },
+            "Kara Zor-Elr":{
+                "Primer Parcial": 85,
+                "Segundo Parcial": 82,
+                "Tercer Parcial": 89
+            }
+        }
+      ]
+    },
+    {
+        "Nombre": "Fisica",
+        "Instructor": "Cesar Gabriel Mariscal Ruiz",
+        "Semestre" : 4,
+        "Alumnos": [
+            {
+            "Bruce Wayne":{
+                "Primer Parcial": 100,
+                "Segundo Parcial": 90,
+                "Tercer Parcial": 80
+            },
+              "Hal Jordan": {
+                "Primer Parcial": 92,
+                "Segundo Parcial": 83,
+                "Tercer Parcial": 75
+              }
+            }
+        ]
+    },
+    {
+      "Nombre": "Estructura archivos",
+      "Instructor":  "Bryan Omar Mayoral Gonzales",
+      "Semestre": 2,
+      "Alumnos": [
+        {
+          "Barry Allen": {
+            "Primer Parcial": 75,
+            "Segundo Parcial": 90,
+            "Tercer Parcial": 72
+          },
+          "Mary Jane": {
+            "Primer Parcial": 91,
+            "Segundo Parcial": 92,
+            "Tercer Parcial": 89
+          }
+        }
+      ]
+    },
+    {
+        "Nombre": "Programación 2",
+        "Instructor": "Jessica Ponce Aguilera",
+        "Semestre": 3,
+        "Alumnos": [
+            {
+            "Peter Parker": {
+                "Primer Parcial": 89,
+                "Segundo Parcial": 93,
+                "Tercer Parcial": 86
+            },
+            "Diana Prince": {
+                "Primer Parcial": 92,
+                "Segundo Parcial": 97,
+                "Tercer Parcial": 89
+            }
+            }
+        ]
+        },
+        {
+        "Nombre": "Base de datos",
+        "Instructor": "Kevin Quiñones Gonzales",
+        "Semestre": 2,
+        "Alumnos": [
+            {
+            "Mary Jane": {
+                "Primer Parcial": 91,
+                "Segundo Parcial": 95,
+                "Tercer Parcial": 89
+            },
+            "Barry Allen": {
+                "Primer Parcial": 100,
+                "Segundo Parcial": 97,
+                "Tercer Parcial": 89
+            }
+            }
+        ]
+    }
+  ]
+}

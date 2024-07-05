@@ -4,10 +4,12 @@
  */
 package Repository;
 
+import models.Key;
+
 /**
  *
  * @author Bryan Mayoral
  */
 public interface RepositorUnivesity {
-    String login(String username, String password);
+    Key login(String username, String password);
 }

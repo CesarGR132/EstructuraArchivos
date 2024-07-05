@@ -6,6 +6,9 @@
 import Repository.RepositorUnivesity;
 import Repository.operations;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
+import models.Key;
+import models.Tokens.Token;
+import models.Tokens.studentToken;
 
 import javax.swing.*;
 
@@ -124,18 +127,30 @@ public class Login extends javax. swing.JFrame {
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        RepositorUnivesity repository = new operations();
+        Key key = new Key();
+
         String username = txtUsuario.getText();
         String password = txtPassword.getText();
 
-        RepositorUnivesity repository = new operations();
-        String token = repository.login(username, password);
+        key = repository.login(username, password);
 
-        if (token != null) {
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos", "Inicio de sesión", JOptionPane.ERROR_MESSAGE);
+        if(key.getMatricula() != null && key.getToken() != null){
+            if(key.getToken().equalsIgnoreCase("alumno")){
+             Token student = new studentToken();
+             student.initInformation(key.getMatricula());
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos");
         }
+
+
     }//GEN-LAST:event_btnLoginActionPerformed
+
+    public void clean(){
+        txtUsuario.setText("");
+        txtPassword.setText("");
+    }
 
     /**
      * @param args the command line arguments
