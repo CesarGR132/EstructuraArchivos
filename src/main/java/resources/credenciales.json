@@ -71,6 +71,18 @@
       "user": "kara123",
       "password": "zor123",
       "token": "alumno"
+    },
+    {
+      "Matricula": "RO2002E120A",
+      "user": "roberto123",
+      "password": "estrada123",
+      "token": "admin"
+    },
+    {
+        "Matricula": "ED2015B110A",
+        "user": "edgar123",
+        "password": "barajas",
+        "token": "admin"
     }
   ]
 }
