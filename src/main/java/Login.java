@@ -3,7 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
+import Repository.RepositorUnivesity;
+import Repository.operations;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
+import models.Key;
+import models.Tokens.Token;
+import models.Tokens.studentToken;
 
 import javax.swing.*;
 
@@ -75,6 +80,11 @@ public class Login extends javax. swing.JFrame {
         btnLogin.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
         btnLogin.setForeground(new java.awt.Color(255, 255, 255));
         btnLogin.setText("Ingresar");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnLogin);
         btnLogin.setBounds(30, 460, 300, 40);
 
@@ -95,7 +105,7 @@ public class Login extends javax. swing.JFrame {
         getContentPane().add(btnExit);
         btnExit.setBounds(1060, 20, 50, 40);
 
-        jLabel6.setIcon(new javax.swing.ImageIcon("src/main/java/resources/img/rezise.png")); // NOI18N
+        jLabel6.setIcon(new javax.swing.ImageIcon("C:\\Users\\cesar\\Documents\\Universidad_UNEDL\\4tosemestre\\Estructura_archivos\\EstructuraArchivos\\src\\main\\java\\resources\\img\\rezise.png")); // NOI18N
         getContentPane().add(jLabel6);
         jLabel6.setBounds(250, 70, 900, 640);
 
@@ -115,6 +125,32 @@ public class Login extends javax. swing.JFrame {
             System.exit(0);
         }
     }//GEN-LAST:event_btnExitActionPerformed
+
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        RepositorUnivesity repository = new operations();
+        Key key = new Key();
+
+        String username = txtUsuario.getText();
+        String password = txtPassword.getText();
+
+        key = repository.login(username, password);
+
+        if(key.getMatricula() != null && key.getToken() != null){
+            if(key.getToken().equalsIgnoreCase("alumno")){
+             Token student = new studentToken();
+             student.initInformation(key.getMatricula());
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos");
+        }
+
+
+    }//GEN-LAST:event_btnLoginActionPerformed
+
+    public void clean(){
+        txtUsuario.setText("");
+        txtPassword.setText("");
+    }
 
     /**
      * @param args the command line arguments

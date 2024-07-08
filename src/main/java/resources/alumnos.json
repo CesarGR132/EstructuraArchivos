@@ -1,0 +1,58 @@
+{
+  "Estudiantes": [
+    {
+      "Matricula" : "JO2021D234A",
+      "Nombre": "John Doe",
+      "Semestre": 1,
+      "Edad": 20
+    },
+    {
+      "Matricula" : "MA2020D235A",
+      "Nombre": "Mary Jane",
+      "Semestre": 2,
+      "Edad": 21
+    },
+    {
+      "Matricula": "PE2020D236A",
+      "Nombre": "Peter Parker",
+      "Semestre": 3,
+      "Edad": 22
+    },
+    {
+        "Matricula": "BR2020D237A",
+        "Nombre": "Bruce Wayne",
+        "Semestre": 4,
+        "Edad": 23
+    },
+    {
+        "Matricula": "CL2020D238A",
+        "Nombre": "Clark Kent",
+        "Semestre": 1,
+        "Edad": 24
+    },
+    {
+        "Matricula": "BA2020D239A",
+        "Nombre": "Barry Allen",
+        "Semestre": 2,
+        "Edad": 25
+    },
+    {
+        "Matricula": "DI2020D240A",
+        "Nombre": "Diana Prince",
+        "Semestre": 3,
+        "Edad": 26
+    },
+    {
+        "Matricula": "HA2020D241A",
+        "Nombre": "Hal Jordan",
+        "Semestre": 4,
+        "Edad": 27
+    },
+    {
+        "Matricula": "KA2020D242A",
+        "Nombre": "Kara Zor-El",
+        "Semestre": 1,
+        "Edad": 28
+    }
+  ]
+}

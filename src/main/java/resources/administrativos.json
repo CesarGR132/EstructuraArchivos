@@ -1,0 +1,14 @@
+{
+  "Administrativos": [
+    {
+      "Matricula": "RO2002E120A",
+      "Nombre": "Roberto Estrada Rosas",
+      "Edad": 47
+    },
+    {
+      "Matricula": "ED2015B110A",
+      "Nombre" : "Edgar Barajas Hernandez",
+      "Edad": 35
+    }
+  ]
+}
