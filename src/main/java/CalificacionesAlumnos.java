@@ -3,7 +3,14 @@ import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -14,13 +21,14 @@ import javax.swing.UnsupportedLookAndFeelException;
  * @author Bryan Mayoral
  */
 public class CalificacionesAlumnos extends javax.swing.JFrame {
-
+    
     /**
      * Creates new form CalificacionesAlumnos
      */
     public CalificacionesAlumnos() {
         initComponents();
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(null);     
+        
     }
 
     /**
@@ -149,6 +157,12 @@ public class CalificacionesAlumnos extends javax.swing.JFrame {
                 new CalificacionesAlumnos().setVisible(true);
             }
         });
+    }
+    
+    
+    public void LlenarTabla(){
+        JSONParser parser=new JSONParser();
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

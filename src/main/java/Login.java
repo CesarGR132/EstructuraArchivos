@@ -6,17 +6,23 @@
 import Repository.RepositorUnivesity;
 import Repository.operations;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import models.Key;
 import models.Tokens.Token;
 import models.Tokens.studentToken;
 
 import javax.swing.*;
+import org.json.simple.parser.JSONParser;
 
 /**
  *
  * @author cesar
  */
 public class Login extends javax. swing.JFrame {
+    static String username;
     /**
      * Creates new form Login
      */
@@ -130,7 +136,7 @@ public class Login extends javax. swing.JFrame {
         RepositorUnivesity repository = new operations();
         Key key = new Key();
 
-        String username = txtUsuario.getText();
+        username = txtUsuario.getText();
         String password = txtPassword.getText();
 
         key = repository.login(username, password);
@@ -139,6 +145,9 @@ public class Login extends javax. swing.JFrame {
             if(key.getToken().equalsIgnoreCase("alumno")){
              Token student = new studentToken();
              student.initInformation(key.getMatricula());
+            }else if(key.getToken().equalsIgnoreCase("maestro")){
+                new VentanaMaestro().setVisible(true);           
+                dispose();
             }
         }else{
             JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos");
@@ -146,7 +155,7 @@ public class Login extends javax. swing.JFrame {
 
 
     }//GEN-LAST:event_btnLoginActionPerformed
-
+       
     public void clean(){
         txtUsuario.setText("");
         txtPassword.setText("");
