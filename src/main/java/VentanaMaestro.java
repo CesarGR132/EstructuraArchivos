@@ -17,15 +17,14 @@ import javax.swing.UnsupportedLookAndFeelException;
  * @author Bryan Mayoral
  */
 public class VentanaMaestro extends javax.swing.JFrame {
-
+    String user="";
     /**
      * Creates new form VentanaMaestro
      */
     public VentanaMaestro() {
         initComponents();
         setLocationRelativeTo(null);
-        setSize(800,600);
-        
+        setSize(800,600);      
         
     }
 
