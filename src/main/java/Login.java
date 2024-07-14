@@ -46,7 +46,7 @@ public class Login extends javax. swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBounds(new java.awt.Rectangle(1132, 740, 740, 740));
-        setMaximumSize(new java.awt.Dimension(1132, 740));
+        setFocusTraversalPolicyProvider(true);
         setMinimumSize(new java.awt.Dimension(1132, 740));
         setUndecorated(true);
         setSize(new java.awt.Dimension(1132, 740));
@@ -104,8 +104,6 @@ public class Login extends javax. swing.JFrame {
         });
         getContentPane().add(btnExit);
         btnExit.setBounds(1060, 20, 50, 40);
-
-        jLabel6.setIcon(new javax.swing.ImageIcon("C:\\Users\\cesar\\Documents\\Universidad_UNEDL\\4tosemestre\\Estructura_archivos\\EstructuraArchivos\\src\\main\\java\\resources\\img\\rezise.png")); // NOI18N
         getContentPane().add(jLabel6);
         jLabel6.setBounds(250, 70, 900, 640);
 
@@ -137,8 +135,11 @@ public class Login extends javax. swing.JFrame {
 
         if(key.getMatricula() != null && key.getToken() != null){
             if(key.getToken().equalsIgnoreCase("alumno")){
-             Token student = new studentToken();
-             student.initInformation(key.getMatricula());
+                studentToken student = new studentToken();
+                student.initInformation(key.getMatricula());
+                AlumnosMenu alumnosMenu = new AlumnosMenu(student);
+                alumnosMenu.setVisible(true);
+                this.dispose();
             }
         }else{
             JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos");
