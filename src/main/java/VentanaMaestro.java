@@ -1,5 +1,7 @@
 
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
+import models.Tokens.teacherToken;
+
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -17,16 +19,16 @@ import javax.swing.UnsupportedLookAndFeelException;
  * @author Bryan Mayoral
  */
 public class VentanaMaestro extends javax.swing.JFrame {
-
+    static teacherToken mainToken = new teacherToken();
     /**
      * Creates new form VentanaMaestro
      */
-    public VentanaMaestro() {
+    public VentanaMaestro(teacherToken token) {
         initComponents();
+        mainToken = token;
         setLocationRelativeTo(null);
         setSize(800,600);
-        
-        
+
     }
 
     /**
@@ -124,7 +126,7 @@ public class VentanaMaestro extends javax.swing.JFrame {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaMaestro().setVisible(true);
+                new VentanaMaestro(mainToken).setVisible(true);
             }
         });
     }

@@ -4,12 +4,11 @@
  */
 
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
-import jdk.swing.interop.SwingInterOpUtils;
-import models.Tokens.Token;
-import models.Tokens.adminToken;
+import models.Subject;
 import models.Tokens.studentToken;
-
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
 
 /**
  *
@@ -17,13 +16,35 @@ import javax.swing.*;
  */
 public class AlumnosMenu extends javax.swing.JFrame {
     static studentToken mainToken = new studentToken();
+    private javax.swing.JTable gradesTable;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblMatricula;
+    private javax.swing.JLabel lblName;
+    private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblEdad;
+    private javax.swing.JLabel lblSemestre;
+    private javax.swing.JTextField txtEdad;
+    private javax.swing.JTextField txtMatricula;
+    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtSemestre;
+
+    public boolean showingGrades = false;
+    public boolean showingInformation = false;
+    public boolean gradesSecure = false;
+    public boolean informationSecure = false;
     /**
      * Creates new form AlumnosMenu
      */
     public AlumnosMenu(studentToken token) {
-        mainToken = token;
-        initComponents();
-        lblNombre.setText(token.getNombre());
+        if(token.getNombre() == null){
+            JOptionPane.showMessageDialog(null, "Error al iniciar sesión","Error", JOptionPane.ERROR_MESSAGE);
+            this.dispose();
+            System.exit(0);
+        }else{
+            mainToken = token;
+            initComponents();
+            lblNombre.setText(token.getNombre());
+        }
     }
 
     /**
@@ -38,7 +59,8 @@ public class AlumnosMenu extends javax.swing.JFrame {
         btnExit = new javax.swing.JButton();
         lblNombre = new javax.swing.JLabel();
         btnExit1 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnShowGrades = new javax.swing.JButton();
+        btnShowInformation = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBounds(new java.awt.Rectangle(1132, 740, 740, 740));
@@ -79,13 +101,31 @@ public class AlumnosMenu extends javax.swing.JFrame {
         getContentPane().add(btnExit1);
         btnExit1.setBounds(1010, 680, 110, 40);
 
-        jButton1.setBackground(new java.awt.Color(30, 30, 50));
-        jButton1.setFont(new java.awt.Font("Lemon", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\cesar\\Documents\\Universidad_UNEDL\\4tosemestre\\Estructura_archivos\\EstructuraArchivos\\src\\main\\java\\resources\\icons\\diploma-certificate.png")); // NOI18N
-        jButton1.setText("Calificaciones");
-        getContentPane().add(jButton1);
-        jButton1.setBounds(450, 160, 200, 43);
+        btnShowGrades.setBackground(new java.awt.Color(30, 30, 50));
+        btnShowGrades.setFont(new java.awt.Font("Lemon", 1, 14)); // NOI18N
+        btnShowGrades.setForeground(new java.awt.Color(255, 255, 255));
+        btnShowGrades.setIcon(new javax.swing.ImageIcon("C:\\Users\\cesar\\Documents\\Universidad_UNEDL\\4tosemestre\\Estructura_archivos\\EstructuraArchivos\\src\\main\\java\\resources\\icons\\diploma-certificate.png")); // NOI18N
+        btnShowGrades.setText("Calificaciones");
+        btnShowGrades.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnShowGradesActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnShowGrades);
+        btnShowGrades.setBounds(550, 160, 240, 43);
+
+        btnShowInformation.setBackground(new java.awt.Color(30, 30, 50));
+        btnShowInformation.setFont(new java.awt.Font("Lemon", 1, 14)); // NOI18N
+        btnShowInformation.setForeground(new java.awt.Color(255, 255, 255));
+        btnShowInformation.setIcon(new javax.swing.ImageIcon("C:\\Users\\cesar\\Documents\\Universidad_UNEDL\\4tosemestre\\Estructura_archivos\\EstructuraArchivos\\src\\main\\java\\resources\\icons\\diploma-certificate.png")); // NOI18N
+        btnShowInformation.setText("Ver información");
+        btnShowInformation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnShowInformationActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnShowInformation);
+        btnShowInformation.setBounds(290, 160, 240, 43);
 
         pack();
         setLocationRelativeTo(null);
@@ -101,10 +141,153 @@ public class AlumnosMenu extends javax.swing.JFrame {
     private void btnExit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExit1ActionPerformed
         int option = JOptionPane.showConfirmDialog(null, "¿Estás seguro que deseas cerrar sesión?", "Salir", JOptionPane.YES_NO_OPTION);
         if (option == JOptionPane.YES_OPTION) {
-            new Login();
+            Login newLogin = new Login();
+            newLogin.setVisible(true);
             this.dispose();
         }
     }//GEN-LAST:event_btnExit1ActionPerformed
+
+    private void btnShowGradesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowGradesActionPerformed
+        if(!showingGrades){
+            if (informationSecure){
+                deletingInformation();
+            }
+            gradesSecure = true;
+            gradesTable = new javax.swing.JTable();
+            jScrollPane1 = new javax.swing.JScrollPane();
+
+            gradesTable.setModel(new javax.swing.table.DefaultTableModel(
+                    new Object [][] {
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null}
+                    },
+                    new String [] {
+                            "Materia", "Primer Parcial", "Segundo Parcial", "Tercer Parcial"
+                    }
+            ));
+            jScrollPane1.setViewportView(gradesTable);
+
+            getContentPane().add(jScrollPane1);
+            jScrollPane1.setBounds(220, 240, 720, 406);
+
+            ((DefaultTableModel) gradesTable.getModel()).setRowCount(0);
+            for(Subject materia : mainToken.getMaterias()){
+                String nombre = materia.getNombreMateria();
+                String [] dataRow = {nombre, String.valueOf(materia.getGrades().get("Primer Parcial")), String.valueOf(materia.getGrades().get("Segundo Parcial")), String.valueOf(materia.getGrades().get("Tercer Parcial"))};
+                ((DefaultTableModel) gradesTable.getModel()).addRow(dataRow);
+            }
+            showingGrades = true;
+        }else if(showingGrades){
+            deletingTable();
+        }
+
+    }//GEN-LAST:event_btnShowGradesActionPerformed
+
+    private void btnShowInformationActionPerformed(java.awt.event.ActionEvent evt){
+        if(!showingInformation){
+            if(gradesSecure){
+                deletingTable();
+            }
+            informationSecure = true;
+            lblName = new javax.swing.JLabel();
+            lblEdad = new javax.swing.JLabel();
+            lblMatricula = new javax.swing.JLabel();
+            lblSemestre = new javax.swing.JLabel();
+            txtSemestre = new javax.swing.JTextField();
+            txtMatricula = new javax.swing.JTextField();
+            txtNombre = new javax.swing.JTextField();
+            txtEdad = new javax.swing.JTextField();
+
+
+            lblName.setFont(new java.awt.Font("Lemon", 1, 14)); // NOI18N
+            lblName.setText("Nombre:");
+            getContentPane().add(lblName);
+            lblName.setBounds(280, 360, 90, 19);
+
+            lblEdad.setFont(new java.awt.Font("Lemon", 1, 14)); // NOI18N
+            lblEdad.setText("Edad:");
+            getContentPane().add(lblEdad);
+            lblEdad.setBounds(280, 400, 90, 19);
+
+            lblMatricula.setFont(new java.awt.Font("Lemon", 1, 14)); // NOI18N
+            lblMatricula.setText("Matricula:");
+            getContentPane().add(lblMatricula);
+            lblMatricula.setBounds(280, 320, 110, 19);
+
+            lblSemestre.setFont(new java.awt.Font("Lemon", 1, 14)); // NOI18N
+            lblSemestre.setText("Semestre:");
+            getContentPane().add(lblSemestre);
+            lblSemestre.setBounds(280, 440, 90, 19);
+            getContentPane().add(txtSemestre);
+            txtSemestre.setBounds(400, 440, 380, 26);
+            txtSemestre.setFont(new java.awt.Font("Lemon", 1, 14));
+            txtSemestre.setEditable(false);
+            getContentPane().add(txtMatricula);
+            txtMatricula.setBounds(400, 320, 380, 26);
+            txtMatricula.setFont(new java.awt.Font("Lemon", 1, 14));
+            txtMatricula.setEditable(false);
+            getContentPane().add(txtNombre);
+            txtNombre.setBounds(400, 360, 380, 26);
+            txtNombre.setFont(new java.awt.Font("Lemon", 1, 14));
+            txtNombre.setEditable(false);
+            getContentPane().add(txtEdad);
+            txtEdad.setBounds(400, 400, 380, 26);
+            txtEdad.setFont(new java.awt.Font("Lemon", 1, 14));;
+            txtEdad.setEditable(false);
+
+            txtNombre.setText(mainToken.getNombre());
+            txtEdad.setText(mainToken.getEdad());
+            txtMatricula.setText(mainToken.getMatricula());
+            txtSemestre.setText(String.valueOf(mainToken.getSemestre()));
+
+            showingInformation = true;
+        } else if (showingInformation) {
+            deletingInformation();
+        }
+
+    }
+
+
+
+    public void deletingTable(){
+        getContentPane().remove(jScrollPane1);
+        getContentPane().remove(gradesTable);
+        getContentPane().revalidate();
+        getContentPane().repaint();
+        showingGrades = false;
+    }
+
+    public void deletingInformation(){
+        getContentPane().remove(lblName);
+        getContentPane().remove(lblEdad);
+        getContentPane().remove(lblSemestre);
+        getContentPane().remove(lblMatricula);
+        getContentPane().remove(txtNombre);
+        getContentPane().remove(txtEdad);
+        getContentPane().remove(txtMatricula);
+        getContentPane().remove(txtSemestre);
+
+        getContentPane().repaint();
+        showingInformation = false;
+    }
 
     /**
      * @param args the command line arguments
@@ -123,7 +306,8 @@ public class AlumnosMenu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnExit1;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel lblNombre;
+    private javax.swing.JButton btnShowGrades;
+    private javax.swing.JButton btnShowInformation;
+
     // End of variables declaration//GEN-END:variables
 }

@@ -9,6 +9,7 @@ import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import models.Key;
 import models.Tokens.Token;
 import models.Tokens.studentToken;
+import models.Tokens.teacherToken;
 
 import javax.swing.*;
 
@@ -104,6 +105,8 @@ public class Login extends javax. swing.JFrame {
         });
         getContentPane().add(btnExit);
         btnExit.setBounds(1060, 20, 50, 40);
+
+        jLabel6.setIcon(new javax.swing.ImageIcon("src\\main\\java\\resources\\img\\rezise.png")); // NOI18N
         getContentPane().add(jLabel6);
         jLabel6.setBounds(250, 70, 900, 640);
 
@@ -139,6 +142,12 @@ public class Login extends javax. swing.JFrame {
                 student.initInformation(key.getMatricula());
                 AlumnosMenu alumnosMenu = new AlumnosMenu(student);
                 alumnosMenu.setVisible(true);
+                this.dispose();
+            }else if(key.getToken().equalsIgnoreCase("maestro")) {
+                teacherToken teacher = new teacherToken();
+                teacher.initInformation(key.getMatricula());
+                VentanaMaestro maestrosMenu = new VentanaMaestro(teacher);
+                maestrosMenu.setVisible(true);
                 this.dispose();
             }
         }else{
