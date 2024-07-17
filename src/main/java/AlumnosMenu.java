@@ -20,7 +20,6 @@ public class AlumnosMenu extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblMatricula;
     private javax.swing.JLabel lblName;
-    private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblEdad;
     private javax.swing.JLabel lblSemestre;
     private javax.swing.JTextField txtEdad;
@@ -117,7 +116,7 @@ public class AlumnosMenu extends javax.swing.JFrame {
         btnShowInformation.setBackground(new java.awt.Color(30, 30, 50));
         btnShowInformation.setFont(new java.awt.Font("Lemon", 1, 14)); // NOI18N
         btnShowInformation.setForeground(new java.awt.Color(255, 255, 255));
-        btnShowInformation.setIcon(new javax.swing.ImageIcon("C:\\Users\\cesar\\Documents\\Universidad_UNEDL\\4tosemestre\\Estructura_archivos\\EstructuraArchivos\\src\\main\\java\\resources\\icons\\diploma-certificate.png")); // NOI18N
+        btnShowInformation.setIcon(new javax.swing.ImageIcon("C:\\Users\\cesar\\Documents\\Universidad_UNEDL\\4tosemestre\\Estructura_archivos\\EstructuraArchivos\\src\\main\\java\\resources\\icons\\information.png")); // NOI18N
         btnShowInformation.setText("Ver información");
         btnShowInformation.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -308,6 +307,6 @@ public class AlumnosMenu extends javax.swing.JFrame {
     private javax.swing.JButton btnExit1;
     private javax.swing.JButton btnShowGrades;
     private javax.swing.JButton btnShowInformation;
-
+    private javax.swing.JLabel lblNombre;
     // End of variables declaration//GEN-END:variables
 }

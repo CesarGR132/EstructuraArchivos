@@ -8,6 +8,7 @@ import Repository.operations;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import models.Key;
 import models.Tokens.Token;
+import models.Tokens.adminToken;
 import models.Tokens.studentToken;
 import models.Tokens.teacherToken;
 
@@ -148,6 +149,12 @@ public class Login extends javax. swing.JFrame {
                 teacher.initInformation(key.getMatricula());
                 VentanaMaestro maestrosMenu = new VentanaMaestro(teacher);
                 maestrosMenu.setVisible(true);
+                this.dispose();
+            }else if (key.getToken().equalsIgnoreCase("admin")){
+                adminToken admin = new adminToken();
+                admin.initInformation(key.getMatricula());
+                AdminMenu adminMenu = new AdminMenu(admin);
+                adminMenu.setVisible(true);
                 this.dispose();
             }
         }else{
