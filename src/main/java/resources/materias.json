@@ -6,11 +6,11 @@
       "Semestre" : 1,
       "Alumnos": [
         {
-          "Jonh Doe":{
+           "Jonh Doe":{
               "Primer Parcial": 10,
               "Segundo Parcial": 9,
               "Tercer Parcial": 8
-          },
+            },
             "Clark Kent":{
                 "Primer Parcial": 93,
                 "Segundo Parcial": 89,

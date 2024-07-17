@@ -4,10 +4,16 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import models.Subject;
+import models.Tokens.teacherToken; 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -15,20 +21,39 @@ import org.json.simple.parser.ParseException;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
+import models.Tokens.teacherToken;
+import org.json.simple.JSONArray;
 /**
  *
  * @author Bryan Mayoral
  */
 public class CalificacionesAlumnos extends javax.swing.JFrame {
-    
+    static String matricula;
+    DefaultTableModel dtm;
+    String datos[]=new String[4];
+    static ArrayList<String>Semestre1;
+    static ArrayList<String>Semestre2;
+    static ArrayList<String>Semestre3;
+    static ArrayList<String>Semestre4;
+    static ArrayList<String>Clases;
+    static String NombreMaestro="";
     /**
      * Creates new form CalificacionesAlumnos
      */
-    public CalificacionesAlumnos() {
+    public CalificacionesAlumnos(String Matricula,String NombreMaestro,ArrayList<String> Semestre1,ArrayList<String> Semestre2,ArrayList<String> Semestre3,ArrayList<String> Semestre4,ArrayList<String>Clases) {
         initComponents();
-        setLocationRelativeTo(null);     
-        
+        setLocationRelativeTo(null);      
+        dtm=(DefaultTableModel) jtCalificaciones.getModel();
+        btnActualizar.setVisible(false);       
+        this.matricula=Matricula;
+        this.NombreMaestro=NombreMaestro;
+        this.Semestre1=Semestre1;
+        this.Semestre2=Semestre2;
+        this.Semestre3=Semestre3;
+        this.Semestre4=Semestre4;
+        this.Clases=Clases;
+        DefinirCombobox();
+        jtCalificaciones.setVisible(false);
     }
 
     /**
@@ -45,6 +70,7 @@ public class CalificacionesAlumnos extends javax.swing.JFrame {
         jtCalificaciones = new javax.swing.JTable();
         btnActualizar = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
+        cbMaterias = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -54,10 +80,7 @@ public class CalificacionesAlumnos extends javax.swing.JFrame {
 
         jtCalificaciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Alumno", "Parcial 1°", "Parcial 2°", "Parcial 3°"
@@ -74,6 +97,13 @@ public class CalificacionesAlumnos extends javax.swing.JFrame {
             }
         });
 
+        cbMaterias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbMaterias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbMateriasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -85,30 +115,36 @@ public class CalificacionesAlumnos extends javax.swing.JFrame {
                         .addComponent(btnVolver)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel1)
-                        .addGap(211, 211, 211))
+                        .addGap(18, 18, 18)
+                        .addComponent(cbMaterias, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(38, 38, 38))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 118, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(95, 95, 95))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(btnActualizar)
-                                .addGap(282, 282, 282))))))
+                        .addGap(0, 301, Short.MAX_VALUE)
+                        .addComponent(btnActualizar)
+                        .addGap(282, 282, 282))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(126, 126, 126)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnVolver)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(16, 16, 16)
+                                .addComponent(jLabel1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(btnVolver)))
+                        .addGap(36, 36, 36))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(cbMaterias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42)
                 .addComponent(btnActualizar)
                 .addContainerGap(24, Short.MAX_VALUE))
         );
@@ -117,10 +153,93 @@ public class CalificacionesAlumnos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-       new VentanaMaestro().setVisible(true);
+       new VentanaMaestro(matricula).setVisible(true);
        dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
 
+    private void cbMateriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbMateriasActionPerformed
+        try{
+            if(cbMaterias.getSelectedItem().equals("Seleccione una materia")==false){
+                
+                JSONParser parser=new JSONParser();
+                JSONObject json=(JSONObject) parser.parse(new FileReader("src/main/java/resources/materias.json"));
+                JSONArray Materias=(JSONArray) json.get("Materias");
+                for(Object obj:Materias){
+                    JSONObject clases=(JSONObject) obj;
+                    if(clases.get("Nombre").equals(cbMaterias.getSelectedItem()) && clases.get("Instructor").equals(NombreMaestro)){
+                        int semestre=Integer.parseInt(""+clases.get("Semestre"));
+                        
+                        switch(semestre){
+                            case 1:LlenarTabla(clases,Semestre1);break;
+                            case 2:LlenarTabla(clases,Semestre2);break;
+                            case 3:LlenarTabla(clases,Semestre3);break;
+                            case 4:LlenarTabla(clases,Semestre4);break;
+                        }
+                    }
+                }
+                
+            }else{
+                dtm.getDataVector().removeAllElements();
+                jtCalificaciones.updateUI();
+            }
+        }catch(Exception e){
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_cbMateriasActionPerformed
+
+    public void LlenarTabla(JSONObject objeto, ArrayList<String> array){
+        /*JSONArray Alumnos=(JSONArray) objeto.get("Alumnos");
+        for(int i=0;i<Alumnos.size();i++){
+            JSONObject alumno=(JSONObject) Alumnos.get(i);           
+           for(String name: array){
+               JSONObject calificacion=(JSONObject) alumno.get(name);
+               System.out.println(name);
+               System.out.println(alumno.get(name));
+               datos[0]=name;
+               datos[1]=""+calificacion.get("Primer Parcial");
+               datos[2]=""+calificacion.get("Segundo Parcial");
+               datos[3]=""+calificacion.get("Tercer Parcial");             
+               dtm.addRow(datos);  
+            }
+        }
+        */
+        File gradeSettings = new File("src\\main\\java\\resources\\materias.json");
+        
+        try{
+            JSONParser gradesParser = new JSONParser();
+            JSONObject gradesInformation = (JSONObject) gradesParser.parse(new FileReader(gradeSettings));
+            JSONArray grades = (JSONArray) gradesInformation.get("Materias");
+
+            for (Object grade : grades){
+                JSONObject gradeObject = (JSONObject) grade;
+                if(String.valueOf(gradeObject.get("Nombre")).equalsIgnoreCase(String.valueOf(objeto.get("Nombre")))){
+                    System.out.println("si paso 1");
+                    //Setting the name subject
+                    
+                    for(String nombre : array){
+                        System.out.println("si paso 2");
+                        JSONArray information = (JSONArray) gradeObject.get("Alumnos");
+                    System.out.println("si paso 3");
+                        for (Object data : information){
+                            System.out.println("si paso 4");
+                            JSONObject dataObject = (JSONObject) data;
+                            JSONObject student = (JSONObject) dataObject.get(nombre);
+                            System.out.println("si paso 5");
+                            System.out.println(nombre);
+                            System.out.println(student.get("Primer Parcial"));
+                        }
+                        
+                    }
+                }
+            }
+
+        }catch (Exception e){
+            System.err.println("Error set grades " + e.getMessage());
+        }
+
+        
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -154,20 +273,35 @@ public class CalificacionesAlumnos extends javax.swing.JFrame {
         SwingUtilities.updateComponentTreeUI(new Login());
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CalificacionesAlumnos().setVisible(true);
+                new CalificacionesAlumnos(matricula,NombreMaestro,Semestre1,Semestre2,Semestre3,Semestre4,Clases).setVisible(true);
             }
         });
     }
     
     
-    public void LlenarTabla(){
-        JSONParser parser=new JSONParser();
+    public void DefinirCombobox(){
+        for(int i = 0; i<Clases.size(); i++) {
+           String clase = Clases.get(i);
+           if (clase.equals("null")) {
+               Clases.remove(i);
+               i--;
+           }
+        }
+        
+        String materias[]=new String[Clases.size()+1];
+        materias[0]="Seleccione una materia";
+        for(int i=1;i<materias.length;i++){
+            materias[i]=Clases.get(i-1);
+        }
+        
+        cbMaterias.setModel(new javax.swing.DefaultComboBoxModel<>(materias));
         
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnVolver;
+    private javax.swing.JComboBox<String> cbMaterias;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jtCalificaciones;

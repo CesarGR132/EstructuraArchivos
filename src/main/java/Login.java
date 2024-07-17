@@ -15,6 +15,7 @@ import models.Tokens.Token;
 import models.Tokens.studentToken;
 
 import javax.swing.*;
+import models.Tokens.teacherToken;
 import org.json.simple.parser.JSONParser;
 
 /**
@@ -23,6 +24,7 @@ import org.json.simple.parser.JSONParser;
  */
 public class Login extends javax. swing.JFrame {
     static String username;
+    
     /**
      * Creates new form Login
      */
@@ -145,9 +147,14 @@ public class Login extends javax. swing.JFrame {
             if(key.getToken().equalsIgnoreCase("alumno")){
              Token student = new studentToken();
              student.initInformation(key.getMatricula());
-            }else if(key.getToken().equalsIgnoreCase("maestro")){
-                new VentanaMaestro().setVisible(true);           
+            }else if(key.getToken().equalsIgnoreCase("maestro")){               
+                Token teacher=new teacherToken();
+                teacher.initInformation(key.getMatricula());             
+                new VentanaMaestro(key.getMatricula()).setVisible(true);           
                 dispose();
+                
+                
+                
             }
         }else{
             JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos");
