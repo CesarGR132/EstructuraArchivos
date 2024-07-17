@@ -3,6 +3,7 @@ import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+<<<<<<< HEAD
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,6 +18,9 @@ import models.Tokens.teacherToken;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+=======
+
+>>>>>>> main
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -28,6 +32,7 @@ import org.json.simple.JSONArray;
  * @author Bryan Mayoral
  */
 public class CalificacionesAlumnos extends javax.swing.JFrame {
+<<<<<<< HEAD
     static String matricula;
     DefaultTableModel dtm;
     String datos[]=new String[4];
@@ -37,11 +42,15 @@ public class CalificacionesAlumnos extends javax.swing.JFrame {
     static ArrayList<String>Semestre4;
     static ArrayList<String>Clases;
     static String NombreMaestro="";
+=======
+
+>>>>>>> main
     /**
      * Creates new form CalificacionesAlumnos
      */
     public CalificacionesAlumnos(String Matricula,String NombreMaestro,ArrayList<String> Semestre1,ArrayList<String> Semestre2,ArrayList<String> Semestre3,ArrayList<String> Semestre4,ArrayList<String>Clases) {
         initComponents();
+<<<<<<< HEAD
         setLocationRelativeTo(null);      
         dtm=(DefaultTableModel) jtCalificaciones.getModel();
         btnActualizar.setVisible(false);       
@@ -54,6 +63,9 @@ public class CalificacionesAlumnos extends javax.swing.JFrame {
         this.Clases=Clases;
         DefinirCombobox();
         jtCalificaciones.setVisible(false);
+=======
+        setLocationRelativeTo(null);
+>>>>>>> main
     }
 
     /**
@@ -277,6 +289,7 @@ public class CalificacionesAlumnos extends javax.swing.JFrame {
             }
         });
     }
+<<<<<<< HEAD
     
     
     public void DefinirCombobox(){
@@ -297,6 +310,8 @@ public class CalificacionesAlumnos extends javax.swing.JFrame {
         cbMaterias.setModel(new javax.swing.DefaultComboBoxModel<>(materias));
         
     }
+=======
+>>>>>>> main
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
@@ -305,5 +320,6 @@ public class CalificacionesAlumnos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jtCalificaciones;
-    // End of variables declaration//GEN-END:variables
-}
+    // End of variables declaration//GEN-END:variable
+
+ 

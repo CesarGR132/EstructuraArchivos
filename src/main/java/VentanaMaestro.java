@@ -27,6 +27,7 @@ import org.json.simple.parser.ParseException;
  * @author Bryan Mayoral
  */
 public class VentanaMaestro extends javax.swing.JFrame {
+<<<<<<< HEAD
     static String matricula="";
     String NombreMaestro="";
     ArrayList<String>Clases=new ArrayList<>();
@@ -36,16 +37,24 @@ public class VentanaMaestro extends javax.swing.JFrame {
     ArrayList<String>Semestre3=new ArrayList();
     ArrayList<String>Semestre4=new ArrayList();
     
+=======
+
+>>>>>>> main
     /**
      * Creates new form VentanaMaestro
      */
     public VentanaMaestro(String matricula) {
         initComponents();
         setLocationRelativeTo(null);
+<<<<<<< HEAD
         setSize(800,600); 
         this.matricula=matricula;
         RecabarInformacion();
         DefinirAlumnos();
+=======
+        setSize(800,600);
+        
+>>>>>>> main
         
     }
 

@@ -6,25 +6,27 @@
 import Repository.RepositorUnivesity;
 import Repository.operations;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import models.Key;
 import models.Tokens.Token;
 import models.Tokens.studentToken;
 
 import javax.swing.*;
+<<<<<<< HEAD
 import models.Tokens.teacherToken;
 import org.json.simple.parser.JSONParser;
+=======
+>>>>>>> main
 
 /**
  *
  * @author cesar
  */
 public class Login extends javax. swing.JFrame {
+<<<<<<< HEAD
     static String username;
     
+=======
+>>>>>>> main
     /**
      * Creates new form Login
      */
@@ -54,7 +56,7 @@ public class Login extends javax. swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBounds(new java.awt.Rectangle(1132, 740, 740, 740));
-        setMaximumSize(new java.awt.Dimension(1132, 740));
+        setFocusTraversalPolicyProvider(true);
         setMinimumSize(new java.awt.Dimension(1132, 740));
         setUndecorated(true);
         setSize(new java.awt.Dimension(1132, 740));
@@ -112,8 +114,6 @@ public class Login extends javax. swing.JFrame {
         });
         getContentPane().add(btnExit);
         btnExit.setBounds(1060, 20, 50, 40);
-
-        jLabel6.setIcon(new javax.swing.ImageIcon("C:\\Users\\cesar\\Documents\\Universidad_UNEDL\\4tosemestre\\Estructura_archivos\\EstructuraArchivos\\src\\main\\java\\resources\\img\\rezise.png")); // NOI18N
         getContentPane().add(jLabel6);
         jLabel6.setBounds(250, 70, 900, 640);
 
@@ -138,13 +138,14 @@ public class Login extends javax. swing.JFrame {
         RepositorUnivesity repository = new operations();
         Key key = new Key();
 
-        username = txtUsuario.getText();
+        String username = txtUsuario.getText();
         String password = txtPassword.getText();
 
         key = repository.login(username, password);
 
         if(key.getMatricula() != null && key.getToken() != null){
             if(key.getToken().equalsIgnoreCase("alumno")){
+<<<<<<< HEAD
              Token student = new studentToken();
              student.initInformation(key.getMatricula());
             }else if(key.getToken().equalsIgnoreCase("maestro")){               
@@ -155,6 +156,13 @@ public class Login extends javax. swing.JFrame {
                 
                 
                 
+=======
+                studentToken student = new studentToken();
+                student.initInformation(key.getMatricula());
+                AlumnosMenu alumnosMenu = new AlumnosMenu(student);
+                alumnosMenu.setVisible(true);
+                this.dispose();
+>>>>>>> main
             }
         }else{
             JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos");
@@ -162,7 +170,7 @@ public class Login extends javax. swing.JFrame {
 
 
     }//GEN-LAST:event_btnLoginActionPerformed
-       
+
     public void clean(){
         txtUsuario.setText("");
         txtPassword.setText("");

@@ -66,7 +66,6 @@
         "Nombre": "Programación 2",
         "Instructor": "Jessica Ponce Aguilera",
         "Semestre": 3,
-        "user":"jessica789",
         "Alumnos": [
             {
             "Peter Parker": {
@@ -86,7 +85,6 @@
         "Nombre": "Base de datos",
         "Instructor": "Kevin Quiñones Gonzales",
         "Semestre": 2,
-        "user": "kevin345",
         "Alumnos": [
             {
             "Mary Jane": {
