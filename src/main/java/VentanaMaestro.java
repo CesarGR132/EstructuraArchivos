@@ -3,11 +3,21 @@ import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import models.Tokens.teacherToken;
 
 import java.awt.Color;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -20,13 +30,27 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class VentanaMaestro extends javax.swing.JFrame {
     static teacherToken mainToken = new teacherToken();
+
+    static String matricula="";
+    String NombreMaestro="";
+    ArrayList<String>Clases=new ArrayList<>();
+
+    ArrayList<String>Semestre1=new ArrayList();
+    ArrayList<String>Semestre2=new ArrayList();
+    ArrayList<String>Semestre3=new ArrayList();
+    ArrayList<String>Semestre4=new ArrayList();
+
+
     /**
      * Creates new form VentanaMaestro
      */
-    public VentanaMaestro(teacherToken token) {
+    public VentanaMaestro(String matricula) {
         initComponents();
-        mainToken = token;
         setLocationRelativeTo(null);
+        setSize(800,600);
+        this.matricula=matricula;
+        RecabarInformacion();
+        DefinirAlumnos();
         setSize(800,600);
 
     }
@@ -89,7 +113,7 @@ public class VentanaMaestro extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
     private void btnVerCalificacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerCalificacionesActionPerformed
-        new CalificacionesAlumnos().setVisible(true);
+        new CalificacionesAlumnos(matricula,NombreMaestro,Semestre1,Semestre2,Semestre3,Semestre4,Clases).setVisible(true);
         dispose();
     }//GEN-LAST:event_btnVerCalificacionesActionPerformed
 
@@ -126,14 +150,74 @@ public class VentanaMaestro extends javax.swing.JFrame {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaMaestro(mainToken).setVisible(true);
+                new VentanaMaestro(matricula).setVisible(true);
             }
         });
     }
 
+    public void RecabarInformacion(){
+        try {
+            JSONParser parser=new JSONParser();
+            JSONObject profesores=(JSONObject) parser.parse(new FileReader("src/main/java/resources/profesores.json"));
+            JSONArray maestros=(JSONArray) profesores.get("Docentes");
+
+            for(Object obj:maestros){
+                JSONObject maestro=(JSONObject) obj;
+                if(maestro.get("Matricula").equals(matricula)){
+                    NombreMaestro=""+maestro.get("Nombre");
+                    JSONObject clases=(JSONObject) maestro.get("Materias");
+                    ObtenerMaterias(clases);
+                }
+            }
+
+        } catch (ParseException ex) {
+            Logger.getLogger(VentanaMaestro.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(VentanaMaestro.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(VentanaMaestro.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
-    
-    
+    public void ObtenerMaterias(JSONObject maestro){
+        try{
+            for(int i=0;i<2;i++){
+                Clases.add(""+maestro.get(""+i));
+            }
+        }catch(Exception e){
+
+        }
+    }
+
+    public void DefinirAlumnos(){
+        JSONParser parser=new JSONParser();
+        try {
+            JSONObject json=(JSONObject) parser.parse(new FileReader("src/main/java/resources/alumnos.json"));
+            JSONArray estudiantes=(JSONArray) json.get("Estudiantes");
+
+            for(Object obj:estudiantes){
+                JSONObject AlumnoInf=(JSONObject) obj;
+
+                int semestre=Integer.parseInt(""+AlumnoInf.get("Semestre"));
+
+                switch(semestre){
+                    case 1:Semestre1.add((String) AlumnoInf.get("Nombre"));break;
+                    case 2:Semestre2.add((String) AlumnoInf.get("Nombre"));break;
+                    case 3:Semestre3.add((String) AlumnoInf.get("Nombre"));break;
+                    case 4:Semestre4.add((String) AlumnoInf.get("Nombre"));break;
+                }
+            }
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(VentanaMaestro.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(VentanaMaestro.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(VentanaMaestro.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JButton btnVerCalificaciones;

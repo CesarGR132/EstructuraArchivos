@@ -7,7 +7,6 @@ import Repository.RepositorUnivesity;
 import Repository.operations;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import models.Key;
-import models.Tokens.Token;
 import models.Tokens.adminToken;
 import models.Tokens.studentToken;
 import models.Tokens.teacherToken;
@@ -19,6 +18,7 @@ import javax.swing.*;
  * @author cesar
  */
 public class Login extends javax. swing.JFrame {
+    static String username;
     /**
      * Creates new form Login
      */
@@ -147,7 +147,7 @@ public class Login extends javax. swing.JFrame {
             }else if(key.getToken().equalsIgnoreCase("maestro")) {
                 teacherToken teacher = new teacherToken();
                 teacher.initInformation(key.getMatricula());
-                VentanaMaestro maestrosMenu = new VentanaMaestro(teacher);
+                VentanaMaestro maestrosMenu = new VentanaMaestro(teacher.getMatricula());
                 maestrosMenu.setVisible(true);
                 this.dispose();
             }else if (key.getToken().equalsIgnoreCase("admin")){
