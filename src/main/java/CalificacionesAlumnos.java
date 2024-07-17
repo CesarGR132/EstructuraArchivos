@@ -33,30 +33,30 @@ public class CalificacionesAlumnos extends javax.swing.JFrame {
 
     static String matricula;
     DefaultTableModel dtm;
-    String datos[]=new String[4];
-    static ArrayList<String>Semestre1;
-    static ArrayList<String>Semestre2;
-    static ArrayList<String>Semestre3;
-    static ArrayList<String>Semestre4;
-    static ArrayList<String>Clases;
-    static String NombreMaestro="";
+    String datos[] = new String[4];
+    static ArrayList<String> Semestre1;
+    static ArrayList<String> Semestre2;
+    static ArrayList<String> Semestre3;
+    static ArrayList<String> Semestre4;
+    static ArrayList<String> Clases;
+    static String NombreMaestro = "";
 
 
     /**
      * Creates new form CalificacionesAlumnos
      */
-    public CalificacionesAlumnos(String Matricula,String NombreMaestro,ArrayList<String> Semestre1,ArrayList<String> Semestre2,ArrayList<String> Semestre3,ArrayList<String> Semestre4,ArrayList<String>Clases) {
+    public CalificacionesAlumnos(String Matricula, String NombreMaestro, ArrayList<String> Semestre1, ArrayList<String> Semestre2, ArrayList<String> Semestre3, ArrayList<String> Semestre4, ArrayList<String> Clases) {
         initComponents();
         setLocationRelativeTo(null);
-        dtm=(DefaultTableModel) jtCalificaciones.getModel();
+        dtm = (DefaultTableModel) jtCalificaciones.getModel();
         btnActualizar.setVisible(false);
-        this.matricula=Matricula;
-        this.NombreMaestro=NombreMaestro;
-        this.Semestre1=Semestre1;
-        this.Semestre2=Semestre2;
-        this.Semestre3=Semestre3;
-        this.Semestre4=Semestre4;
-        this.Clases=Clases;
+        this.matricula = Matricula;
+        this.NombreMaestro = NombreMaestro;
+        this.Semestre1 = Semestre1;
+        this.Semestre2 = Semestre2;
+        this.Semestre3 = Semestre3;
+        this.Semestre4 = Semestre4;
+        this.Clases = Clases;
         DefinirCombobox();
         jtCalificaciones.setVisible(false);
         setLocationRelativeTo(null);
@@ -85,12 +85,12 @@ public class CalificacionesAlumnos extends javax.swing.JFrame {
         jLabel1.setText("Calificaciones De Los Alumnos.");
 
         jtCalificaciones.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+                new Object[][]{
 
-            },
-            new String [] {
-                "Alumno", "Parcial 1°", "Parcial 2°", "Parcial 3°"
-            }
+                },
+                new String[]{
+                        "Alumno", "Parcial 1°", "Parcial 2°", "Parcial 3°"
+                }
         ));
         jScrollPane1.setViewportView(jtCalificaciones);
 
@@ -103,7 +103,7 @@ public class CalificacionesAlumnos extends javax.swing.JFrame {
             }
         });
 
-        cbMaterias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbMaterias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Item 1", "Item 2", "Item 3", "Item 4"}));
         cbMaterias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbMateriasActionPerformed(evt);
@@ -113,87 +113,95 @@ public class CalificacionesAlumnos extends javax.swing.JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnVolver)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(cbMaterias, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(38, 38, 38))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 301, Short.MAX_VALUE)
-                        .addComponent(btnActualizar)
-                        .addGap(282, 282, 282))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(126, 126, 126)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addComponent(btnVolver)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jLabel1)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(cbMaterias, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(38, 38, 38))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addGap(0, 301, Short.MAX_VALUE)
+                                                .addComponent(btnActualizar)
+                                                .addGap(282, 282, 282))))
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(126, 126, 126)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(16, 16, 16)
-                                .addComponent(jLabel1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(btnVolver)))
-                        .addGap(36, 36, 36))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(cbMaterias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42)
-                .addComponent(btnActualizar)
-                .addContainerGap(24, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addGap(16, 16, 16)
+                                                                .addComponent(jLabel1))
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addContainerGap()
+                                                                .addComponent(btnVolver)))
+                                                .addGap(36, 36, 36))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addComponent(cbMaterias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(42, 42, 42)
+                                .addComponent(btnActualizar)
+                                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-       new VentanaMaestro(matricula).setVisible(true);
-       dispose();
+        new VentanaMaestro(matricula).setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
 
     private void cbMateriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbMateriasActionPerformed
-        try{
-            if(cbMaterias.getSelectedItem().equals("Seleccione una materia")==false){
+        try {
+            if (cbMaterias.getSelectedItem().equals("Seleccione una materia") == false) {
 
-                JSONParser parser=new JSONParser();
-                JSONObject json=(JSONObject) parser.parse(new FileReader("src/main/java/resources/materias.json"));
-                JSONArray Materias=(JSONArray) json.get("Materias");
-                for(Object obj:Materias){
-                    JSONObject clases=(JSONObject) obj;
-                    if(clases.get("Nombre").equals(cbMaterias.getSelectedItem()) && clases.get("Instructor").equals(NombreMaestro)){
-                        int semestre=Integer.parseInt(""+clases.get("Semestre"));
+                JSONParser parser = new JSONParser();
+                JSONObject json = (JSONObject) parser.parse(new FileReader("src/main/java/resources/materias.json"));
+                JSONArray Materias = (JSONArray) json.get("Materias");
+                for (Object obj : Materias) {
+                    JSONObject clases = (JSONObject) obj;
+                    if (clases.get("Nombre").equals(cbMaterias.getSelectedItem()) && clases.get("Instructor").equals(NombreMaestro)) {
+                        int semestre = Integer.parseInt("" + clases.get("Semestre"));
 
-                        switch(semestre){
-                            case 1:LlenarTabla(clases,Semestre1);break;
-                            case 2:LlenarTabla(clases,Semestre2);break;
-                            case 3:LlenarTabla(clases,Semestre3);break;
-                            case 4:LlenarTabla(clases,Semestre4);break;
+                        switch (semestre) {
+                            case 1:
+                                LlenarTabla(clases, Semestre1);
+                                break;
+                            case 2:
+                                LlenarTabla(clases, Semestre2);
+                                break;
+                            case 3:
+                                LlenarTabla(clases, Semestre3);
+                                break;
+                            case 4:
+                                LlenarTabla(clases, Semestre4);
+                                break;
                         }
                     }
                 }
 
-            }else{
+            } else {
                 dtm.getDataVector().removeAllElements();
                 jtCalificaciones.updateUI();
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
     }//GEN-LAST:event_cbMateriasActionPerformed
 
-    public void LlenarTabla(JSONObject objeto, ArrayList<String> array){
+    public void LlenarTabla(JSONObject objeto, ArrayList<String> array) {
         /*JSONArray Alumnos=(JSONArray) objeto.get("Alumnos");
         for(int i=0;i<Alumnos.size();i++){
             JSONObject alumno=(JSONObject) Alumnos.get(i);
@@ -211,22 +219,22 @@ public class CalificacionesAlumnos extends javax.swing.JFrame {
         */
         File gradeSettings = new File("src\\main\\java\\resources\\materias.json");
 
-        try{
+        try {
             JSONParser gradesParser = new JSONParser();
             JSONObject gradesInformation = (JSONObject) gradesParser.parse(new FileReader(gradeSettings));
             JSONArray grades = (JSONArray) gradesInformation.get("Materias");
 
-            for (Object grade : grades){
+            for (Object grade : grades) {
                 JSONObject gradeObject = (JSONObject) grade;
-                if(String.valueOf(gradeObject.get("Nombre")).equalsIgnoreCase(String.valueOf(objeto.get("Nombre")))){
+                if (String.valueOf(gradeObject.get("Nombre")).equalsIgnoreCase(String.valueOf(objeto.get("Nombre")))) {
                     System.out.println("si paso 1");
                     //Setting the name subject
 
-                    for(String nombre : array){
+                    for (String nombre : array) {
                         System.out.println("si paso 2");
                         JSONArray information = (JSONArray) gradeObject.get("Alumnos");
-                    System.out.println("si paso 3");
-                        for (Object data : information){
+                        System.out.println("si paso 3");
+                        for (Object data : information) {
                             System.out.println("si paso 4");
                             JSONObject dataObject = (JSONObject) data;
                             JSONObject student = (JSONObject) dataObject.get(nombre);
@@ -239,7 +247,7 @@ public class CalificacionesAlumnos extends javax.swing.JFrame {
                 }
             }
 
-        }catch (Exception e){
+        } catch (Exception e) {
             System.err.println("Error set grades " + e.getMessage());
         }
 
@@ -253,7 +261,7 @@ public class CalificacionesAlumnos extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -274,31 +282,30 @@ public class CalificacionesAlumnos extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        
+
         UIManager.setLookAndFeel(new FlatMacDarkLaf());
         SwingUtilities.updateComponentTreeUI(new Login());
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CalificacionesAlumnos(matricula,NombreMaestro,Semestre1,Semestre2,Semestre3,Semestre4,Clases).setVisible(true);
+                new CalificacionesAlumnos(matricula, NombreMaestro, Semestre1, Semestre2, Semestre3, Semestre4, Clases).setVisible(true);
             }
         });
     }
 
 
-
-    public void DefinirCombobox(){
-        for(int i = 0; i<Clases.size(); i++) {
-           String clase = Clases.get(i);
-           if (clase.equals("null")) {
-               Clases.remove(i);
-               i--;
-           }
+    public void DefinirCombobox() {
+        for (int i = 0; i < Clases.size(); i++) {
+            String clase = Clases.get(i);
+            if (clase.equals("null")) {
+                Clases.remove(i);
+                i--;
+            }
         }
 
-        String materias[]=new String[Clases.size()+1];
-        materias[0]="Seleccione una materia";
-        for(int i=1;i<materias.length;i++){
-            materias[i]=Clases.get(i-1);
+        String materias[] = new String[Clases.size() + 1];
+        materias[0] = "Seleccione una materia";
+        for (int i = 1; i < materias.length; i++) {
+            materias[i] = Clases.get(i - 1);
         }
 
         cbMaterias.setModel(new javax.swing.DefaultComboBoxModel<>(materias));
@@ -315,4 +322,4 @@ public class CalificacionesAlumnos extends javax.swing.JFrame {
     private javax.swing.JTable jtCalificaciones;
     // End of variables declaration//GEN-END:variable
 
-
+}
