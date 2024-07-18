@@ -3,21 +3,12 @@ import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
-import models.Subject;
-import models.Tokens.teacherToken;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-import models.Tokens.teacherToken;
 import org.json.simple.JSONArray;
 
 /*
@@ -32,7 +23,6 @@ import org.json.simple.JSONArray;
 public class CalificacionesAlumnos extends javax.swing.JFrame {
 
     static String matricula;
-    DefaultTableModel dtm;
     String datos[] = new String[4];
     static ArrayList<String> Semestre1;
     static ArrayList<String> Semestre2;
@@ -48,7 +38,6 @@ public class CalificacionesAlumnos extends javax.swing.JFrame {
     public CalificacionesAlumnos(String Matricula, String NombreMaestro, ArrayList<String> Semestre1, ArrayList<String> Semestre2, ArrayList<String> Semestre3, ArrayList<String> Semestre4, ArrayList<String> Clases) {
         initComponents();
         setLocationRelativeTo(null);
-        dtm = (DefaultTableModel) jtCalificaciones.getModel();
         btnActualizar.setVisible(false);
         this.matricula = Matricula;
         this.NombreMaestro = NombreMaestro;
@@ -86,10 +75,13 @@ public class CalificacionesAlumnos extends javax.swing.JFrame {
 
         jtCalificaciones.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{
-
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null}
                 },
                 new String[]{
-                        "Alumno", "Parcial 1°", "Parcial 2°", "Parcial 3°"
+                        "Alumno", "Primer Parcial", "Segundo Parcial", "Tercer Parcial"
                 }
         ));
         jScrollPane1.setViewportView(jtCalificaciones);
@@ -165,7 +157,7 @@ public class CalificacionesAlumnos extends javax.swing.JFrame {
 
     private void cbMateriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbMateriasActionPerformed
         try {
-            if (cbMaterias.getSelectedItem().equals("Seleccione una materia") == false) {
+            if (!cbMaterias.getSelectedItem().equals("Seleccione una materia")) {
 
                 JSONParser parser = new JSONParser();
                 JSONObject json = (JSONObject) parser.parse(new FileReader("src/main/java/resources/materias.json"));
@@ -193,7 +185,6 @@ public class CalificacionesAlumnos extends javax.swing.JFrame {
                 }
 
             } else {
-                dtm.getDataVector().removeAllElements();
                 jtCalificaciones.updateUI();
             }
         } catch (Exception e) {
@@ -202,23 +193,9 @@ public class CalificacionesAlumnos extends javax.swing.JFrame {
     }//GEN-LAST:event_cbMateriasActionPerformed
 
     public void LlenarTabla(JSONObject objeto, ArrayList<String> array) {
-        /*JSONArray Alumnos=(JSONArray) objeto.get("Alumnos");
-        for(int i=0;i<Alumnos.size();i++){
-            JSONObject alumno=(JSONObject) Alumnos.get(i);
-           for(String name: array){
-               JSONObject calificacion=(JSONObject) alumno.get(name);
-               System.out.println(name);
-               System.out.println(alumno.get(name));
-               datos[0]=name;
-               datos[1]=""+calificacion.get("Primer Parcial");
-               datos[2]=""+calificacion.get("Segundo Parcial");
-               datos[3]=""+calificacion.get("Tercer Parcial");
-               dtm.addRow(datos);
-            }
-        }
-        */
         File gradeSettings = new File("src\\main\\java\\resources\\materias.json");
-
+        DefaultTableModel model = (DefaultTableModel) jtCalificaciones.getModel();
+        model.setRowCount(0); // Clear existing data
         try {
             JSONParser gradesParser = new JSONParser();
             JSONObject gradesInformation = (JSONObject) gradesParser.parse(new FileReader(gradeSettings));
@@ -227,31 +204,27 @@ public class CalificacionesAlumnos extends javax.swing.JFrame {
             for (Object grade : grades) {
                 JSONObject gradeObject = (JSONObject) grade;
                 if (String.valueOf(gradeObject.get("Nombre")).equalsIgnoreCase(String.valueOf(objeto.get("Nombre")))) {
-                    System.out.println("si paso 1");
-                    //Setting the name subject
-
-                    for (String nombre : array) {
-                        System.out.println("si paso 2");
-                        JSONArray information = (JSONArray) gradeObject.get("Alumnos");
-                        System.out.println("si paso 3");
-                        for (Object data : information) {
-                            System.out.println("si paso 4");
-                            JSONObject dataObject = (JSONObject) data;
+                    JSONArray information = (JSONArray) gradeObject.get("Alumnos");
+                    for (Object data : information) {
+                        JSONObject dataObject = (JSONObject) data;
+                        for (String nombre : array) {
                             JSONObject student = (JSONObject) dataObject.get(nombre);
-                            System.out.println("si paso 5");
-                            System.out.println(nombre);
-                            System.out.println(student.get("Primer Parcial"));
+                            if (student != null) {
+                                String[] dataRow = {nombre, String.valueOf(student.get("Primer Parcial")), String.valueOf(student.get("Segundo Parcial")), String.valueOf(student.get("Tercer Parcial"))};
+                                model.addRow(dataRow);
+                            } else {
+                                System.out.println("Student data for " + nombre + " not found.");
+                            }
                         }
-
                     }
                 }
             }
-
         } catch (Exception e) {
             System.err.println("Error set grades " + e.getMessage());
         }
-
-
+        jtCalificaciones.setModel(model);
+        jtCalificaciones.setVisible(true);
+        jScrollPane1.setViewportView(jtCalificaciones);
     }
 
     /**
@@ -263,22 +236,6 @@ public class CalificacionesAlumnos extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CalificacionesAlumnos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CalificacionesAlumnos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CalificacionesAlumnos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CalificacionesAlumnos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
         //</editor-fold>
 
         /* Create and display the form */
