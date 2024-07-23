@@ -1,11 +1,15 @@
 
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
+import java.awt.event.ActionEvent;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -30,6 +34,7 @@ public class CalificacionesAlumnos extends javax.swing.JFrame {
     static ArrayList<String> Semestre4;
     static ArrayList<String> Clases;
     static String NombreMaestro = "";
+    DefaultTableModel dtm;
 
 
     /**
@@ -38,7 +43,6 @@ public class CalificacionesAlumnos extends javax.swing.JFrame {
     public CalificacionesAlumnos(String Matricula, String NombreMaestro, ArrayList<String> Semestre1, ArrayList<String> Semestre2, ArrayList<String> Semestre3, ArrayList<String> Semestre4, ArrayList<String> Clases) {
         initComponents();
         setLocationRelativeTo(null);
-        btnActualizar.setVisible(false);
         this.matricula = Matricula;
         this.NombreMaestro = NombreMaestro;
         this.Semestre1 = Semestre1;
@@ -49,8 +53,98 @@ public class CalificacionesAlumnos extends javax.swing.JFrame {
         DefinirCombobox();
         jtCalificaciones.setVisible(false);
         setLocationRelativeTo(null);
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }         
+        });
+        dtm=(DefaultTableModel) jtCalificaciones.getModel();
+        btnActualizar.setVisible(false);
     }
 
+    
+    private void btnActualizarActionPerformed(ActionEvent evt) {
+        try{
+           JSONParser parser=new JSONParser();
+           JSONObject materias=(JSONObject) parser.parse(new FileReader("src/main/java/resources/materias.json"));
+           JSONArray jsonArray=(JSONArray) materias.get("Materias");
+
+            for(Object obj:jsonArray){
+               JSONObject jsonObj=(JSONObject) obj;
+              
+                if(jsonObj.get("Nombre").equals(cbMaterias.getSelectedItem())){      
+                    JSONArray array=(JSONArray) jsonObj.get("Alumnos");
+                    JSONObject obj2=(JSONObject) array.get(0);
+                    int Semestre=Integer.parseInt(""+jsonObj.get("Semestre"));
+                    switch(Semestre){
+                        case 1:LlamarVariables(obj2,1,Semestre1,array,jsonObj,jsonArray,materias);break;
+                        case 2:LlamarVariables(obj2,2,Semestre2,array,jsonObj,jsonArray,materias);break;
+                        case 3:LlamarVariables(obj2,3,Semestre3,array,jsonObj,jsonArray,materias);break;
+                        case 4:LlamarVariables(obj2,4,Semestre4,array,jsonObj,jsonArray,materias);break;
+                    }
+                    
+                }   
+            }
+           
+        }catch(Exception e){
+            
+        }
+        
+    }
+    
+    public void LlamarVariables(JSONObject obj2, int Semestre, ArrayList<String>Array,JSONArray array,JSONObject jsonObj,JSONArray jsonArray,JSONObject materias){
+        try{
+            String parciales[]={"Primer Parcial","Segundo Parcial","Tercer Parcial"};
+            if(ValidarValores()){
+                for(int i=0;i<Array.size();i++){
+                    JSONObject alumno=(JSONObject) obj2.get(Array.get(i));
+                    for(int j=1;j<jtCalificaciones.getColumnCount();j++){
+                        alumno.put(parciales[j-1],Integer.parseInt(""+jtCalificaciones.getValueAt(i,j)));    
+                    }          
+                    PrintWriter pw=new PrintWriter("src/main/java/resources/materias.json");
+                    pw.print(materias.toJSONString());
+                    pw.close();
+                }
+            }
+        }catch(Exception e){
+            if(ValidarEspacioVacio()){
+                JOptionPane.showMessageDialog(null,"Error: Uno de los campos de la tabla esta vacio o tiene un caracter");
+            }
+        }
+    }
+    
+    public boolean ValidarEspacioVacio(){
+        boolean x=false;
+        
+        try{
+            for(int i=0;i<jtCalificaciones.getColumnCount();i++){
+                for(int j=1;j<jtCalificaciones.getRowCount();j++){
+                    int a=Integer.parseInt(""+jtCalificaciones.getValueAt(i,j));
+                }
+            }
+        }catch(Exception e){
+            x=true;
+        }
+        
+        return x;
+    }
+    
+    public boolean ValidarValores(){
+        boolean x=true;
+        
+        for(int i=0;i<jtCalificaciones.getRowCount();i++){
+            for(int j=1;j<jtCalificaciones.getColumnCount();j++){
+                System.out.println(jtCalificaciones.getValueAt(i,j));
+                if(Integer.parseInt(""+jtCalificaciones.getValueAt(i,j))<0 || Integer.parseInt(""+jtCalificaciones.getValueAt(i,j))>100){
+                    x=false;
+                    JOptionPane.showMessageDialog(null,"Error: Uno de los campos de la tabla es menor a 0 o mayor a 100");
+                }
+            }
+        }
+        
+        return x;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -158,7 +252,7 @@ public class CalificacionesAlumnos extends javax.swing.JFrame {
     private void cbMateriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbMateriasActionPerformed
         try {
             if (!cbMaterias.getSelectedItem().equals("Seleccione una materia")) {
-
+                btnActualizar.setVisible(true);
                 JSONParser parser = new JSONParser();
                 JSONObject json = (JSONObject) parser.parse(new FileReader("src/main/java/resources/materias.json"));
                 JSONArray Materias = (JSONArray) json.get("Materias");
@@ -185,7 +279,9 @@ public class CalificacionesAlumnos extends javax.swing.JFrame {
                 }
 
             } else {
+                dtm.getDataVector().removeAllElements();
                 jtCalificaciones.updateUI();
+                btnActualizar.setVisible(false);
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -269,14 +365,13 @@ public class CalificacionesAlumnos extends javax.swing.JFrame {
 
     }
 
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Variables declaration - do not modify                     
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnVolver;
     private javax.swing.JComboBox<String> cbMaterias;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jtCalificaciones;
-    // End of variables declaration//GEN-END:variable
+    // End of variables declaration                  
 
 }
