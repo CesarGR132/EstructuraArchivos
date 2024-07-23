@@ -1,8 +1,16 @@
 
+import Repository.AdminRepository;
+import Repository.MainOperations;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import models.Tokens.adminToken;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.io.File;
+import java.io.FileReader;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -15,6 +23,15 @@ import javax.swing.*;
  */
 public class AdminMenu extends javax.swing.JFrame {
     static adminToken mainToken = new adminToken();
+    AdminRepository operations = new MainOperations();
+    boolean teachersShownToken = false;
+    File teacherSettings = new File("src/main/java/resources/profesores.json");
+
+    private javax.swing.JButton btnAddTeacher;
+    private javax.swing.JButton btnDeleteTeacher;
+    private javax.swing.JButton btnUpdateTeacher;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     /**
      * Creates new form AdminMenu
      */
@@ -41,12 +58,12 @@ public class AdminMenu extends javax.swing.JFrame {
     private void initComponents() {
 
         btnExit = new javax.swing.JButton();
-        btnExit1 = new javax.swing.JButton();
-        btnShowTeachers = new javax.swing.JButton();
+        btnLogOut = new javax.swing.JButton();
+        btnShowGrades = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        btnShowTeachers1 = new javax.swing.JButton();
-        btnShowTeachers2 = new javax.swing.JButton();
-        btnShowTeachers3 = new javax.swing.JButton();
+        btnShowTeachers = new javax.swing.JButton();
+        btnShowStudents = new javax.swing.JButton();
+        btnShowSubjects = new javax.swing.JButton();
         lblAdvertencia = new javax.swing.JLabel();
         lblNombre = new javax.swing.JLabel();
 
@@ -72,74 +89,74 @@ public class AdminMenu extends javax.swing.JFrame {
         getContentPane().add(btnExit);
         btnExit.setBounds(1070, 20, 50, 40);
 
-        btnExit1.setBackground(new java.awt.Color(255, 0, 0));
-        btnExit1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnExit1.setForeground(new java.awt.Color(255, 255, 255));
-        btnExit1.setText("Log out");
-        btnExit1.addActionListener(new java.awt.event.ActionListener() {
+        btnLogOut.setBackground(new java.awt.Color(255, 0, 0));
+        btnLogOut.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnLogOut.setForeground(new java.awt.Color(255, 255, 255));
+        btnLogOut.setText("Log out");
+        btnLogOut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExit1ActionPerformed(evt);
+                btnLogOutActionPerformed(evt);
             }
         });
-        getContentPane().add(btnExit1);
-        btnExit1.setBounds(1010, 680, 110, 40);
+        getContentPane().add(btnLogOut);
+        btnLogOut.setBounds(1010, 680, 110, 40);
 
-        btnShowTeachers.setBackground(new java.awt.Color(30, 30, 50));
-        btnShowTeachers.setFont(new java.awt.Font("Lemon", 1, 14)); // NOI18N
-        btnShowTeachers.setForeground(new java.awt.Color(255, 255, 255));
-        btnShowTeachers.setIcon(new javax.swing.ImageIcon("C:\\Users\\cesar\\Documents\\Universidad_UNEDL\\4tosemestre\\Estructura_archivos\\EstructuraArchivos\\src\\main\\java\\resources\\icons\\information.png")); // NOI18N
-        btnShowTeachers.setText("Calificaciones");
-        btnShowTeachers.addActionListener(new java.awt.event.ActionListener() {
+        btnShowGrades.setBackground(new java.awt.Color(30, 30, 50));
+        btnShowGrades.setFont(new java.awt.Font("Lemon", 1, 14)); // NOI18N
+        btnShowGrades.setForeground(new java.awt.Color(255, 255, 255));
+        btnShowGrades.setIcon(new javax.swing.ImageIcon("C:\\Users\\cesar\\Documents\\Universidad_UNEDL\\4tosemestre\\Estructura_archivos\\EstructuraArchivos\\src\\main\\java\\resources\\icons\\information.png")); // NOI18N
+        btnShowGrades.setText("Calificaciones");
+        btnShowGrades.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnShowTeachersActionPerformed(evt);
+                btnShowGradesActionPerformed(evt);
             }
         });
-        getContentPane().add(btnShowTeachers);
-        btnShowTeachers.setBounds(800, 120, 240, 43);
+        getContentPane().add(btnShowGrades);
+        btnShowGrades.setBounds(800, 120, 240, 43);
 
         jLabel1.setFont(new java.awt.Font("Lemon", 1, 24)); // NOI18N
         jLabel1.setText("Administrador");
         getContentPane().add(jLabel1);
         jLabel1.setBounds(480, 30, 220, 50);
 
-        btnShowTeachers1.setBackground(new java.awt.Color(30, 30, 50));
-        btnShowTeachers1.setFont(new java.awt.Font("Lemon", 1, 14)); // NOI18N
-        btnShowTeachers1.setForeground(new java.awt.Color(255, 255, 255));
-        btnShowTeachers1.setIcon(new javax.swing.ImageIcon("C:\\Users\\cesar\\Documents\\Universidad_UNEDL\\4tosemestre\\Estructura_archivos\\EstructuraArchivos\\src\\main\\java\\resources\\icons\\teacher (1).png")); // NOI18N
-        btnShowTeachers1.setText("Maestros");
-        btnShowTeachers1.addActionListener(new java.awt.event.ActionListener() {
+        btnShowTeachers.setBackground(new java.awt.Color(30, 30, 50));
+        btnShowTeachers.setFont(new java.awt.Font("Lemon", 1, 14)); // NOI18N
+        btnShowTeachers.setForeground(new java.awt.Color(255, 255, 255));
+        btnShowTeachers.setIcon(new javax.swing.ImageIcon("C:\\Users\\cesar\\Documents\\Universidad_UNEDL\\4tosemestre\\Estructura_archivos\\EstructuraArchivos\\src\\main\\java\\resources\\icons\\teacher (1).png")); // NOI18N
+        btnShowTeachers.setText("Maestros");
+        btnShowTeachers.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnShowTeachers1ActionPerformed(evt);
+                btnShowTeachersActionPerformed(evt);
             }
         });
-        getContentPane().add(btnShowTeachers1);
-        btnShowTeachers1.setBounds(20, 120, 240, 43);
+        getContentPane().add(btnShowTeachers);
+        btnShowTeachers.setBounds(20, 120, 240, 43);
 
-        btnShowTeachers2.setBackground(new java.awt.Color(30, 30, 50));
-        btnShowTeachers2.setFont(new java.awt.Font("Lemon", 1, 14)); // NOI18N
-        btnShowTeachers2.setForeground(new java.awt.Color(255, 255, 255));
-        btnShowTeachers2.setIcon(new javax.swing.ImageIcon("C:\\Users\\cesar\\Documents\\Universidad_UNEDL\\4tosemestre\\Estructura_archivos\\EstructuraArchivos\\src\\main\\java\\resources\\icons\\boy-student.png")); // NOI18N
-        btnShowTeachers2.setText("Alumnos");
-        btnShowTeachers2.addActionListener(new java.awt.event.ActionListener() {
+        btnShowStudents.setBackground(new java.awt.Color(30, 30, 50));
+        btnShowStudents.setFont(new java.awt.Font("Lemon", 1, 14)); // NOI18N
+        btnShowStudents.setForeground(new java.awt.Color(255, 255, 255));
+        btnShowStudents.setIcon(new javax.swing.ImageIcon("C:\\Users\\cesar\\Documents\\Universidad_UNEDL\\4tosemestre\\Estructura_archivos\\EstructuraArchivos\\src\\main\\java\\resources\\icons\\boy-student.png")); // NOI18N
+        btnShowStudents.setText("Alumnos");
+        btnShowStudents.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnShowTeachers2ActionPerformed(evt);
+                btnShowStudentsActionPerformed(evt);
             }
         });
-        getContentPane().add(btnShowTeachers2);
-        btnShowTeachers2.setBounds(280, 120, 240, 43);
+        getContentPane().add(btnShowStudents);
+        btnShowStudents.setBounds(280, 120, 240, 43);
 
-        btnShowTeachers3.setBackground(new java.awt.Color(30, 30, 50));
-        btnShowTeachers3.setFont(new java.awt.Font("Lemon", 1, 14)); // NOI18N
-        btnShowTeachers3.setForeground(new java.awt.Color(255, 255, 255));
-        btnShowTeachers3.setIcon(new javax.swing.ImageIcon("C:\\Users\\cesar\\Documents\\Universidad_UNEDL\\4tosemestre\\Estructura_archivos\\EstructuraArchivos\\src\\main\\java\\resources\\icons\\book.png")); // NOI18N
-        btnShowTeachers3.setText("Materias");
-        btnShowTeachers3.addActionListener(new java.awt.event.ActionListener() {
+        btnShowSubjects.setBackground(new java.awt.Color(30, 30, 50));
+        btnShowSubjects.setFont(new java.awt.Font("Lemon", 1, 14)); // NOI18N
+        btnShowSubjects.setForeground(new java.awt.Color(255, 255, 255));
+        btnShowSubjects.setIcon(new javax.swing.ImageIcon("C:\\Users\\cesar\\Documents\\Universidad_UNEDL\\4tosemestre\\Estructura_archivos\\EstructuraArchivos\\src\\main\\java\\resources\\icons\\book.png")); // NOI18N
+        btnShowSubjects.setText("Materias");
+        btnShowSubjects.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnShowTeachers3ActionPerformed(evt);
+                btnShowSubjectsActionPerformed(evt);
             }
         });
-        getContentPane().add(btnShowTeachers3);
-        btnShowTeachers3.setBounds(540, 120, 240, 43);
+        getContentPane().add(btnShowSubjects);
+        btnShowSubjects.setBounds(540, 120, 240, 43);
 
         lblAdvertencia.setIcon(new javax.swing.ImageIcon("C:\\Users\\cesar\\Documents\\Universidad_UNEDL\\4tosemestre\\Estructura_archivos\\EstructuraArchivos\\src\\main\\java\\resources\\icons\\alert.png")); // NOI18N
         lblAdvertencia.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -166,34 +183,182 @@ public class AdminMenu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnExitActionPerformed
 
-    private void btnExit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExit1ActionPerformed
+    private void btnLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogOutActionPerformed
         int option = JOptionPane.showConfirmDialog(null, "¿Estás seguro que deseas cerrar sesión?", "Salir", JOptionPane.YES_NO_OPTION);
         if (option == JOptionPane.YES_OPTION) {
             Login newLogin = new Login();
             newLogin.setVisible(true);
             this.dispose();
         }
-    }//GEN-LAST:event_btnExit1ActionPerformed
+    }//GEN-LAST:event_btnLogOutActionPerformed
 
-    private void btnShowTeachersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowTeachersActionPerformed
+    private void btnShowGradesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowGradesActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnShowTeachersActionPerformed
+    }//GEN-LAST:event_btnShowGradesActionPerformed
 
-    private void btnShowTeachers1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowTeachers1ActionPerformed
+    private void btnShowStudentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowStudentsActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnShowTeachers1ActionPerformed
+    }//GEN-LAST:event_btnShowStudentsActionPerformed
 
-    private void btnShowTeachers2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowTeachers2ActionPerformed
+    private void btnShowSubjectsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowSubjectsActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnShowTeachers2ActionPerformed
-
-    private void btnShowTeachers3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowTeachers3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnShowTeachers3ActionPerformed
+    }//GEN-LAST:event_btnShowSubjectsActionPerformed
 
     private void lblAdvertenciaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAdvertenciaMouseClicked
         JOptionPane.showMessageDialog(this, "En cada pestaña de los botones se podra modificar, eliminar, añadir y consultar cada uno de los registros", "WARNING", JOptionPane.WARNING_MESSAGE);
     }//GEN-LAST:event_lblAdvertenciaMouseClicked
+
+    private void btnShowTeachersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowTeachersActionPerformed
+        manageTeachersItems();
+    }//GEN-LAST:event_btnShowTeachersActionPerformed
+
+    private void btnDeleteTeacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteTeacherActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDeleteTeacherActionPerformed
+
+    private void btnUpdateTeacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateTeacherActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnUpdateTeacherActionPerformed
+
+    private void btnAddTeacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddTeacherActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAddTeacherActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        JTable target = (JTable) evt.getSource();
+        int row = target.getSelectedRow();
+        if(row != -1){
+            showTeacherDetails(jTable1.getValueAt(row, 0).toString());
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
+
+
+    public void manageTeachersItems(){
+        if(!teachersShownToken){
+            btnAddTeacher = new javax.swing.JButton();
+            btnAddTeacher.setBackground(new java.awt.Color(0, 102, 0));
+            btnAddTeacher.setFont(new java.awt.Font("Lemon", 1, 14)); // NOI18N
+            btnAddTeacher.setForeground(new java.awt.Color(255, 255, 255));
+            btnAddTeacher.setText("Añadir ");
+            btnAddTeacher.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    btnAddTeacherActionPerformed(evt);
+                }
+            });
+            getContentPane().add(btnAddTeacher);
+            btnAddTeacher.setBounds(760, 270, 140, 40);
+
+            btnUpdateTeacher = new javax.swing.JButton();
+            btnUpdateTeacher.setBackground(new java.awt.Color(0, 102, 0));
+            btnUpdateTeacher.setFont(new java.awt.Font("Lemon", 1, 14)); // NOI18N
+            btnUpdateTeacher.setForeground(new java.awt.Color(255, 255, 255));
+            btnUpdateTeacher.setText("Actualizar");
+            btnUpdateTeacher.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    btnUpdateTeacherActionPerformed(evt);
+                }
+            });
+            getContentPane().add(btnUpdateTeacher);
+            btnUpdateTeacher.setBounds(760, 340, 140, 40);
+
+
+            btnDeleteTeacher = new javax.swing.JButton();
+            btnDeleteTeacher.setBackground(new java.awt.Color(0, 102, 0));
+            btnDeleteTeacher.setFont(new java.awt.Font("Lemon", 1, 14)); // NOI18N
+            btnDeleteTeacher.setForeground(new java.awt.Color(255, 255, 255));
+            btnDeleteTeacher.setText("Borrar");
+            btnDeleteTeacher.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    btnDeleteTeacherActionPerformed(evt);
+                }
+            });
+            getContentPane().add(btnDeleteTeacher);
+            btnDeleteTeacher.setBounds(760, 410, 140, 40);
+
+            jScrollPane1 = new javax.swing.JScrollPane();
+            jTable1 = new javax.swing.JTable();
+            jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                    new Object [][] {
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null}
+                    },
+                    new String [] {
+                            "Matricula", "Nombre", "Edad", "Materias"
+                    }
+            ));
+
+            jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    jTable1MouseClicked(evt);
+                }
+            });
+
+            jScrollPane1.setViewportView(jTable1);
+
+            getContentPane().add(jScrollPane1);
+            jScrollPane1.setBounds(180, 210, 456, 406);
+
+            seeTeacherInformation();
+
+            teachersShownToken = true;
+        }else{
+            getContentPane().remove(btnAddTeacher);
+            getContentPane().remove(btnDeleteTeacher);
+            getContentPane().remove(btnUpdateTeacher);
+            getContentPane().remove(jScrollPane1);
+            getContentPane().remove(jTable1);
+
+            getContentPane().repaint();
+            teachersShownToken = false;
+        }
+    }
+
+    public void seeTeacherInformation() {
+        ((DefaultTableModel) jTable1.getModel()).setRowCount(0);
+        try{
+            JSONParser parserTeacher = new JSONParser();
+            JSONObject teacherInformation = (JSONObject) parserTeacher.parse(new FileReader(teacherSettings));
+            JSONArray teachers = (JSONArray) teacherInformation.get("Docentes");
+
+            for(Object teacher : teachers){
+                JSONObject teacherObject = (JSONObject) teacher;
+                JSONObject classes = (JSONObject) teacherObject.get("Materias");
+                String[] dataRow = {(String) teacherObject.get("Matricula"), (String) teacherObject.get("Nombre"),String.valueOf(teacherObject.get("Edad")), String.valueOf(classes.size())};
+                ((DefaultTableModel) jTable1.getModel()).addRow(dataRow);
+            }
+        }catch (Exception e){
+            System.err.println("Error en " + e.getMessage());
+        }
+    }
+
+    public void showTeacherDetails(String matricula){
+        try{
+            JSONParser parserMaestros =  new JSONParser();
+            JSONArray maestros =  new JSONArray();
+
+            detailLoop: for(Object obj : maestros){
+                JSONObject maestro = (JSONObject) obj;
+                if(maestro.get("Matricula").equals(matricula)){
+                   JSONObject classes = (JSONObject) maestro.get("Materias");
+                   for(int i = 0; i < classes.size(); i++){
+                       System.out.println(classes.get(String.valueOf(i)));
+                   }
+                   JOptionPane.showMessageDialog(this , "Matricula: " + maestro.get("Matricula") +
+                           "\nNombre: " + maestro.get("Nombre") +
+                           "\nEdad: " + maestro.get("Edad") +
+                           "\nMaterias: " );
+                   break detailLoop;
+                }
+            }
+
+        }catch (Exception e){
+            System.err.println("Error en " + e.getMessage());
+        }
+    }
+
+
 
     /**
      * @param args the command line arguments
@@ -213,11 +378,11 @@ public class AdminMenu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExit;
-    private javax.swing.JButton btnExit1;
+    private javax.swing.JButton btnLogOut;
+    private javax.swing.JButton btnShowGrades;
+    private javax.swing.JButton btnShowStudents;
+    private javax.swing.JButton btnShowSubjects;
     private javax.swing.JButton btnShowTeachers;
-    private javax.swing.JButton btnShowTeachers1;
-    private javax.swing.JButton btnShowTeachers2;
-    private javax.swing.JButton btnShowTeachers3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblAdvertencia;
     private javax.swing.JLabel lblNombre;
