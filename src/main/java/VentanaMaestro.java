@@ -3,6 +3,7 @@ import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import models.Tokens.teacherToken;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -46,8 +47,7 @@ public class VentanaMaestro extends javax.swing.JFrame {
      */
     public VentanaMaestro(String matricula) {
         initComponents();
-        setLocationRelativeTo(null);
-        setSize(800,600);
+        setLocationRelativeTo(this);
         this.matricula=matricula;
         RecabarInformacion();
         DefinirAlumnos();
@@ -70,17 +70,13 @@ public class VentanaMaestro extends javax.swing.JFrame {
         btnCerrarSesion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(null);
+        setMinimumSize(new java.awt.Dimension(600, 600));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Bienvenido, querido profesor.");
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(260, 30, 316, 32);
 
         jLabel3.setText("----------------------------------------------------------------");
-        getContentPane().add(jLabel3);
-        jLabel3.setBounds(250, 60, 330, 16);
 
         btnVerCalificaciones.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnVerCalificaciones.setText("Ver Calificaciones");
@@ -89,8 +85,6 @@ public class VentanaMaestro extends javax.swing.JFrame {
                 btnVerCalificacionesActionPerformed(evt);
             }
         });
-        getContentPane().add(btnVerCalificaciones);
-        btnVerCalificaciones.setBounds(20, 120, 170, 40);
 
         btnCerrarSesion.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnCerrarSesion.setText("Cerrar Sesion");
@@ -99,8 +93,39 @@ public class VentanaMaestro extends javax.swing.JFrame {
                 btnCerrarSesionActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCerrarSesion);
-        btnCerrarSesion.setBounds(20, 180, 170, 40);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(btnVerCalificaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(btnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(182, 182, 182)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))))
+                .addContainerGap(210, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
+                .addGap(44, 44, 44)
+                .addComponent(btnVerCalificaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(btnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(126, Short.MAX_VALUE))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
