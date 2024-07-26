@@ -11,6 +11,8 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.io.File;
 import java.io.FileReader;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -22,16 +24,44 @@ import java.io.FileReader;
  * @author cesar
  */
 public class AdminMenu extends javax.swing.JFrame {
+    AdminRepository mainOperations = new MainOperations();
     static adminToken mainToken = new adminToken();
-    AdminRepository operations = new MainOperations();
+
     boolean teachersShownToken = false;
+    boolean studentsShownToken = false;
+    boolean subjectsShownToken = false;
+    boolean gradesShownToken = false;
+
+
     File teacherSettings = new File("src/main/java/resources/profesores.json");
+    File studentSettings = new File("src/main/java/resources/alumnos.json");
+    File subjectSettings = new File("src/main/java/resources/materias.json");
 
     private javax.swing.JButton btnAddTeacher;
     private javax.swing.JButton btnDeleteTeacher;
     private javax.swing.JButton btnUpdateTeacher;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+
+    private javax.swing.JButton btnRemoveStudent;
+    private javax.swing.JButton btnUpdateStudent;
+    private javax.swing.JTable studentsTable;
+    private javax.swing.JButton btnAddStudent;
+    private javax.swing.JScrollPane jScrollPane2;
+
+    private javax.swing.JButton btnAddSubject;
+    private javax.swing.JButton btnUpdateSubject;
+    private javax.swing.JTable subjectsTable;
+    private javax.swing.JScrollPane jScrollPane3;
+
+    private javax.swing.JButton btnUpdateGrades;
+    private javax.swing.JTable gradesTable;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JComboBox<String> cbGradesFilter;
+
+
+
+
     /**
      * Creates new form AdminMenu
      */
@@ -193,15 +223,30 @@ public class AdminMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLogOutActionPerformed
 
     private void btnShowGradesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowGradesActionPerformed
-        // TODO add your handling code here:
+        if(teachersShownToken){
+            manageGradeItems(gradesShownToken);
+            manageTeachersItems(true);
+        }else{
+            manageGradeItems(gradesShownToken);
+        }
     }//GEN-LAST:event_btnShowGradesActionPerformed
 
     private void btnShowStudentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowStudentsActionPerformed
-        // TODO add your handling code here:
+        if(teachersShownToken){
+            manageStudentItems(studentsShownToken);
+            manageTeachersItems(true);
+        }else{
+            manageStudentItems(studentsShownToken);
+        }
     }//GEN-LAST:event_btnShowStudentsActionPerformed
 
     private void btnShowSubjectsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowSubjectsActionPerformed
-        // TODO add your handling code here:
+        if(teachersShownToken){
+            manageSubjectItems(subjectsShownToken);
+            manageTeachersItems(true);
+        }else{
+            manageSubjectItems(subjectsShownToken);
+        }
     }//GEN-LAST:event_btnShowSubjectsActionPerformed
 
     private void lblAdvertenciaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAdvertenciaMouseClicked
@@ -209,7 +254,12 @@ public class AdminMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_lblAdvertenciaMouseClicked
 
     private void btnShowTeachersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowTeachersActionPerformed
-        manageTeachersItems();
+        if(studentsShownToken){
+            manageTeachersItems(teachersShownToken);
+            manageStudentItems(true);
+        }else{
+            manageTeachersItems(teachersShownToken);
+        }
     }//GEN-LAST:event_btnShowTeachersActionPerformed
 
     private void btnDeleteTeacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteTeacherActionPerformed
@@ -221,20 +271,145 @@ public class AdminMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUpdateTeacherActionPerformed
 
     private void btnAddTeacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddTeacherActionPerformed
-        // TODO add your handling code here:
+        ArrayList<String> subjects = new ArrayList<>();
+        JPanel formPanel = new JPanel();
+        formPanel.setBounds(0, 0, 500, 500);
+        JLabel lblTitle = new JLabel("Añadir maestro");
+        lblTitle.setFont(new java.awt.Font("Lemon", 1, 20));
+        formPanel.add(lblTitle);
+
+
+        formPanel.setLayout(new BoxLayout(formPanel, BoxLayout.Y_AXIS));
+        JPanel buttonPanel = new JPanel();
+
+        /*
+        JButton btnAdd = new JButton("+");
+        btnAdd.setFont(new java.awt.Font("Lemon", 1, 20));
+        btnAdd.setBackground(new java.awt.Color(255, 0, 0));
+        btnAdd.setForeground(new java.awt.Color(255, 255, 255));
+        btnAdd.setToolTipText("Añadir materia");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JTextField txtSubject = new JTextField(20);
+                txtSubject.setFont(new java.awt.Font("Lemon", 1, 11));
+                formPanel.add(txtSubject);
+                formPanel.revalidate();
+                formPanel.repaint();
+            }
+        });
+        buttonPanel.add(btnAdd);
+
+        JButton btnRemove = new JButton("-");
+        btnRemove.setFont(new java.awt.Font("Lemon", 1, 20));
+        btnRemove.setBackground(new java.awt.Color(38, 126, 241));
+        btnRemove.setForeground(new java.awt.Color(255, 255, 255));
+        btnRemove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                formPanel.remove(formPanel.getComponentCount() - 1);
+                formPanel.revalidate();
+                formPanel.repaint();
+            }
+        });
+        buttonPanel.add(btnRemove);
+
+        */
+
+
+        JLabel lblName = new JLabel("Nombre:");
+        JTextField txtName = new JTextField(20);
+        lblName.setFont(new java.awt.Font("Lemon", 1, 14));
+        txtName.setFont(new java.awt.Font("Lemon", 1, 11));
+
+        JLabel lblPaterno = new JLabel("Apellido paterno:");
+        JTextField txtPaterno = new JTextField(20);
+        lblPaterno.setFont(new java.awt.Font("Lemon", 1, 14));
+        txtPaterno.setFont(new java.awt.Font("Lemon", 1, 11));
+
+        JLabel lblMaterno = new JLabel("Apellido Materno:");
+        JTextField txtMaterno = new JTextField(20);
+        lblMaterno.setFont(new java.awt.Font("Lemon", 1, 14));
+        txtMaterno.setFont(new java.awt.Font("Lemon", 1, 11));
+
+        JLabel lblAge = new JLabel("Edad:");
+        JTextField txtAge = new JTextField(20);
+        lblAge.setFont(new java.awt.Font("Lemon", 1, 14));
+        txtAge.setFont(new java.awt.Font("Lemon", 1, 11));
+
+
+        JLabel lblSubject = new JLabel("Materia:");
+        JTextField txtSubjects = new JTextField(20);
+        lblSubject.setFont(new java.awt.Font("Lemon", 1, 14));
+        txtSubjects.setFont(new java.awt.Font("Lemon", 1, 11));
+
+        formPanel.add(lblName);
+        formPanel.add(txtName);
+        formPanel.add(lblPaterno);
+        formPanel.add(txtPaterno);
+        formPanel.add(lblMaterno);
+        formPanel.add(txtMaterno);
+        formPanel.add(lblAge);
+        formPanel.add(txtAge);
+        formPanel.add(buttonPanel);
+        formPanel.add(lblSubject);
+        formPanel.add(txtSubjects);
+        formPanel.add(lblSubject);
+
+        int result = JOptionPane.showConfirmDialog(null, formPanel, "Añadir maestro", JOptionPane.OK_CANCEL_OPTION,0,new ImageIcon("src/main/java/resources/icons/add.png"));
+        if(result == JOptionPane.OK_OPTION){
+            String name = txtName.getText();
+            String age = txtAge.getText();
+            String subject = txtSubjects.getText();
+            seeTeacherInformation();
+        }
     }//GEN-LAST:event_btnAddTeacherActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         JTable target = (JTable) evt.getSource();
         int row = target.getSelectedRow();
         if(row != -1){
-            showTeacherDetails(jTable1.getValueAt(row, 0).toString());
+            mainOperations.showTeacherDetails(jTable1.getValueAt(row, 0).toString());
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
+    private void studentsTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_studentsTableMouseClicked
+        JTable target = (JTable) evt.getSource();
+        int row = target.getSelectedRow();
+        if(row != -1){
+            mainOperations.seeStudentDetails(studentsTable.getValueAt(row, 0).toString());
+        }
+    }//GEN-LAST:event_studentsTableMouseClicked
 
-    public void manageTeachersItems(){
-        if(!teachersShownToken){
+    private void subjectsTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_subjectsTableMouseClicked
+        JTable target = (JTable) evt.getSource();
+        int row = target.getSelectedRow();
+        if(row != -1){
+            mainOperations.showSubjectDetails(subjectsTable.getValueAt(row, 0).toString());
+        }
+    }//GEN-LAST:event_subjectsTableMouseClicked
+
+    private void btnAddStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddStudentActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAddStudentActionPerformed
+
+    private void btnUpdateStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateStudentActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnUpdateStudentActionPerformed
+
+    private void btnRemoveStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveStudentActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRemoveStudentActionPerformed
+
+    private void btnAddSubjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSubjectActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAddSubjectActionPerformed
+
+    private void btnUpdateSubjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateSubjectActionPerformed
+
+    }//GEN-LAST:event_btnUpdateSubjectActionPerformed
+
+
+    public void manageTeachersItems(boolean token){
+        if(!token){
             btnAddTeacher = new javax.swing.JButton();
             btnAddTeacher.setBackground(new java.awt.Color(0, 102, 0));
             btnAddTeacher.setFont(new java.awt.Font("Lemon", 1, 14)); // NOI18N
@@ -315,6 +490,215 @@ public class AdminMenu extends javax.swing.JFrame {
         }
     }
 
+    public void manageStudentItems(boolean token) {
+        if (!token) {
+            jScrollPane2 = new javax.swing.JScrollPane();
+            studentsTable = new javax.swing.JTable();
+            studentsTable.setModel(new javax.swing.table.DefaultTableModel(
+                    new Object [][] {
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null}
+                    },
+                    new String [] {
+                            "Matricula", "Nombre", "Semestre", "Edad"
+                    }
+            ));
+            jScrollPane2.setViewportView(studentsTable);
+
+            getContentPane().add(jScrollPane2);
+            jScrollPane2.setBounds(110, 230, 570, 406);
+
+            btnRemoveStudent = new javax.swing.JButton();
+            btnRemoveStudent.setBackground(new java.awt.Color(0, 102, 0));
+            btnRemoveStudent.setFont(new java.awt.Font("Lemon", 1, 12)); // NOI18N
+            btnRemoveStudent.setForeground(new java.awt.Color(255, 255, 255));
+            btnRemoveStudent.setText("Eliminar");
+            btnRemoveStudent.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    btnRemoveStudentActionPerformed(evt);
+                }
+            });
+            getContentPane().add(btnRemoveStudent);
+            btnRemoveStudent.setBounds(790, 470, 120, 40);
+
+            btnAddStudent = new javax.swing.JButton();
+            btnAddStudent.setBackground(new java.awt.Color(0, 102, 0));
+            btnAddStudent.setFont(new java.awt.Font("Lemon", 1, 12)); // NOI18N
+            btnAddStudent.setForeground(new java.awt.Color(255, 255, 255));
+            btnAddStudent.setText("Añadir");
+            btnAddStudent.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    btnAddStudentActionPerformed(evt);
+                }
+            });
+            getContentPane().add(btnAddStudent);
+            btnAddStudent.setBounds(790, 330, 120, 40);
+
+            btnUpdateStudent = new javax.swing.JButton();
+            btnUpdateStudent.setBackground(new java.awt.Color(0, 102, 0));
+            btnUpdateStudent.setFont(new java.awt.Font("Lemon", 1, 12)); // NOI18N
+            btnUpdateStudent.setForeground(new java.awt.Color(255, 255, 255));
+            btnUpdateStudent.setText("Actualizar");
+            btnUpdateStudent.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    btnUpdateStudentActionPerformed(evt);
+                }
+            });
+
+            studentsTable.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    studentsTableMouseClicked(evt);
+                }
+            });
+            getContentPane().add(btnUpdateStudent);
+            btnUpdateStudent.setBounds(790, 400, 120, 40);
+
+            seeStudentInformation();
+
+            studentsShownToken = true;
+        } else {
+            getContentPane().remove(btnAddStudent);
+            getContentPane().remove(btnRemoveStudent);
+            getContentPane().remove(btnUpdateStudent);
+            getContentPane().remove(jScrollPane2);
+            getContentPane().repaint();
+
+            studentsShownToken = false;
+        }
+    }
+
+    public void manageSubjectItems(boolean token){
+        if (!token) {
+            jScrollPane3 = new javax.swing.JScrollPane();
+            subjectsTable = new javax.swing.JTable();
+            subjectsTable.setModel(new javax.swing.table.DefaultTableModel(
+                    new Object [][] {
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null}
+                    },
+                    new String [] {
+                            "Nombre", "Instructor", "Semestre", "Cantidad de alumnos"
+                    }
+            ));
+            jScrollPane3.setViewportView(subjectsTable);
+
+            subjectsTable.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    subjectsTableMouseClicked(evt);
+                }
+            });
+
+            getContentPane().add(jScrollPane3);
+            jScrollPane3.setBounds(110, 230, 570, 406);
+
+
+            btnAddSubject = new javax.swing.JButton();
+            btnAddSubject.setBackground(new java.awt.Color(0, 102, 0));
+            btnAddSubject.setFont(new java.awt.Font("Lemon", 1, 12)); // NOI18N
+            btnAddSubject.setForeground(new java.awt.Color(255, 255, 255));
+            btnAddSubject.setText("Añadir");
+            btnAddSubject.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    btnAddSubjectActionPerformed(evt);
+                }
+            });
+            getContentPane().add(btnAddSubject);
+            btnAddSubject.setBounds(790, 330, 120, 40);
+
+            btnUpdateSubject = new javax.swing.JButton();
+            btnUpdateSubject.setBackground(new java.awt.Color(0, 102, 0));
+            btnUpdateSubject.setFont(new java.awt.Font("Lemon", 1, 12)); // NOI18N
+            btnUpdateSubject.setForeground(new java.awt.Color(255, 255, 255));
+            btnUpdateSubject.setText("Actualizar");
+            btnUpdateSubject.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    btnUpdateSubjectActionPerformed(evt);
+                }
+            });
+
+            getContentPane().add(btnUpdateSubject);
+            btnUpdateSubject.setBounds(790, 400, 120, 40);
+
+            seeSubjectsInformation();
+
+            studentsShownToken = true;
+        } else {
+            getContentPane().remove(btnAddSubject);
+            getContentPane().remove(btnUpdateSubject);
+            getContentPane().remove(jScrollPane3);
+            getContentPane().repaint();
+
+            subjectsShownToken = false;
+        }
+    }
+
+    public void manageGradeItems(boolean token){
+        if (!token) {
+            jScrollPane4 = new javax.swing.JScrollPane();
+            gradesTable = new javax.swing.JTable();
+            gradesTable.setModel(new javax.swing.table.DefaultTableModel(
+                    new Object [][] {
+                            {null, null, null, null, null},
+                            {null, null, null, null, null},
+                            {null, null, null, null, null},
+                            {null, null, null, null, null}
+                    },
+                    new String [] {
+                            "Alumno", "Materia", "Primer Parcial", "Segundo Parcial","Tercer Parcial"
+                    }
+            ));
+            jScrollPane4.setViewportView(gradesTable);
+
+
+
+            getContentPane().add(jScrollPane4);
+            jScrollPane4.setBounds(110, 230, 570, 406);
+
+            cbGradesFilter = new javax.swing.JComboBox<>();
+            cbGradesFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1er Semestre","2do Semestre", "3er Semestre", "4to Semestre"}));
+            cbGradesFilter.setFont(new java.awt.Font("Lemon", 1, 12)); // NOI18N
+            cbGradesFilter.setForeground(new java.awt.Color(255, 255, 255));
+            cbGradesFilter.setBackground(new java.awt.Color(0, 102, 0));
+            getContentPane().add(cbGradesFilter);
+            cbGradesFilter.setBounds(790, 230, 120, 40);
+
+            cbGradesFilter.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    seeGradesInformation(cbGradesFilter.getSelectedItem().toString());
+                }
+            });
+
+            btnUpdateGrades = new javax.swing.JButton();
+            btnUpdateGrades.setBackground(new java.awt.Color(0, 102, 0));
+            btnUpdateGrades.setFont(new java.awt.Font("Lemon", 1, 12)); // NOI18N
+            btnUpdateGrades.setForeground(new java.awt.Color(255, 255, 255));
+            btnUpdateGrades.setText("Actualizar");
+            btnUpdateGrades.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    btnUpdateSubjectActionPerformed(evt);
+                }
+            });
+
+            getContentPane().add(btnUpdateGrades);
+            btnUpdateGrades.setBounds(790, 360, 120, 40);
+
+
+            gradesShownToken = true;
+        } else {
+            getContentPane().remove(btnUpdateGrades);
+            getContentPane().remove(jScrollPane4);
+            getContentPane().repaint();
+
+            subjectsShownToken = false;
+        }
+    }
+
+
+    //Method to see the information of all the admin options
     public void seeTeacherInformation() {
         ((DefaultTableModel) jTable1.getModel()).setRowCount(0);
         try{
@@ -333,30 +717,110 @@ public class AdminMenu extends javax.swing.JFrame {
         }
     }
 
-    public void showTeacherDetails(String matricula){
+    public void seeStudentInformation(){
+        ((DefaultTableModel) studentsTable.getModel()).setRowCount(0);
         try{
-            JSONParser parserMaestros =  new JSONParser();
-            JSONArray maestros =  new JSONArray();
+            JSONParser studentParser = new JSONParser();
+            JSONObject studentInformation = (JSONObject) studentParser.parse(new FileReader(studentSettings));
+            JSONArray students = (JSONArray) studentInformation.get("Estudiantes");
 
-            detailLoop: for(Object obj : maestros){
-                JSONObject maestro = (JSONObject) obj;
-                if(maestro.get("Matricula").equals(matricula)){
-                   JSONObject classes = (JSONObject) maestro.get("Materias");
-                   for(int i = 0; i < classes.size(); i++){
-                       System.out.println(classes.get(String.valueOf(i)));
-                   }
-                   JOptionPane.showMessageDialog(this , "Matricula: " + maestro.get("Matricula") +
-                           "\nNombre: " + maestro.get("Nombre") +
-                           "\nEdad: " + maestro.get("Edad") +
-                           "\nMaterias: " );
-                   break detailLoop;
-                }
+            for(Object student : students){
+                JSONObject studentObject = (JSONObject) student;
+                String[] dataRow = {(String) studentObject.get("Matricula"), (String) studentObject.get("Nombre"),String.valueOf(studentObject.get("Semestre")), String.valueOf(studentObject.get("Edad"))};
+                ((DefaultTableModel) studentsTable.getModel()).addRow(dataRow);
             }
-
         }catch (Exception e){
             System.err.println("Error en " + e.getMessage());
         }
     }
+
+    public void seeSubjectsInformation(){
+        ((DefaultTableModel) subjectsTable.getModel()).setRowCount(0);
+        try {
+            JSONParser parserSubject = new JSONParser();
+            JSONObject subjectInformation = (JSONObject) parserSubject.parse(new FileReader(subjectSettings));
+            JSONArray subjects = (JSONArray) subjectInformation.get("Materias");
+
+            for (Object subject : subjects) {
+                String[] dataRow = getSubjectsStrings((JSONObject) subject);
+                ((DefaultTableModel) subjectsTable.getModel()).addRow(dataRow);
+            }
+        } catch (Exception e) {
+            System.err.println("Error en " + e.getMessage());
+        }
+    }
+
+    private static String[] getSubjectsStrings(JSONObject subject) {
+        String []dataRow = new String[4];
+        //Possible cause of error
+        JSONArray students = (JSONArray) subject.get("Alumnos");
+        for (Object student : students) {
+            JSONObject studentObject = (JSONObject) student;
+            dataRow = new String[]{
+                    (String) subject.get("Nombre"),
+                    (String) subject.get("Instructor"),
+                    String.valueOf(subject.get("Semestre")),
+                    String.valueOf(studentObject.size())
+            };
+        }
+        //----
+
+        return dataRow;
+    }
+
+    public void seeGradesInformation(String semester){
+        ((DefaultTableModel) gradesTable.getModel()).setRowCount(0);
+        ArrayList<String> studentsKeys = new ArrayList<>();
+        // "Alumno", "Materia", "Primer Parcial", "Segundo Parcial","Tercer Parcial"
+        try {
+            // State to read the studentSettings
+           JSONParser semesterParse = new JSONParser();
+           JSONObject semesterInformation = (JSONObject) semesterParse.parse(new FileReader(studentSettings));
+           JSONArray semesters = (JSONArray) semesterInformation.get("Estudiantes");
+           // State to read already filter grades
+            JSONParser gradesParser = new JSONParser();
+            JSONObject gradesInformation = (JSONObject) gradesParser.parse(new FileReader(subjectSettings));
+            JSONArray grades = (JSONArray) gradesInformation.get("Materias");
+
+            for(Object student : semesters){
+                JSONObject studentObject = (JSONObject) student;
+                String studentSemester = studentObject.get("Semestre").toString();
+                if(studentObject.get("Semestre").toString().equals(studentSemester)){
+                    studentsKeys.add((String) studentObject.get("Nombre"));
+                }
+            }
+
+            if(studentsKeys.isEmpty()){
+                JOptionPane.showMessageDialog(this, "Something went wrong", "Error", JOptionPane.ERROR_MESSAGE);
+            }else{
+                for(String key: studentsKeys){
+                    for(Object grade : grades){
+                        JSONObject gradeObject = (JSONObject) grade;
+                        JSONArray students = (JSONArray) gradeObject.get("Alumnos");
+                        for(Object student : students){
+                            JSONObject studentObject = (JSONObject) student;
+                            if(studentObject.get("Nombre").toString().equals(key)){
+                                String[] dataRow = {
+                                        key,
+                                        (String) gradeObject.get("Nombre"),
+                                        String.valueOf(studentObject.get("PrimerParcial")),
+                                        String.valueOf(studentObject.get("SegundoParcial")),
+                                        String.valueOf(studentObject.get("TercerParcial"))
+                                };
+                                ((DefaultTableModel) gradesTable.getModel()).addRow(dataRow);
+                            }
+                        }
+                    }
+                }
+            }
+
+
+
+        } catch (Exception e) {
+            System.err.println("Error en " + e.getMessage());
+        }
+    }
+
 
 
 

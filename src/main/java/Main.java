@@ -7,16 +7,18 @@ import models.Tokens.studentToken;
 import models.Tokens.teacherToken;
 
 import javax.swing.*;
+import java.util.Calendar;
 import java.util.HashMap;
 
 public class Main {
     public static void main(String[] args) {
-        RepositorUnivesity repository = new operations();
+        /*RepositorUnivesity repository = new operations();
         Key key = new Key();
         //cambia las credenciales de los parametros del login usando las credenciales del archivo credenciales.json
         key = repository.login("mary123","jane123");
 
         printTokes(key);
+         */
     }
 
     public static void printTokes(Key key){
