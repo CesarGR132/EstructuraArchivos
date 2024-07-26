@@ -11,8 +11,10 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.io.File;
 import java.io.FileReader;
+import java.io.ObjectStreamException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Set;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -224,29 +226,50 @@ public class AdminMenu extends javax.swing.JFrame {
 
     private void btnShowGradesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowGradesActionPerformed
         if(teachersShownToken){
-            manageGradeItems(gradesShownToken);
             manageTeachersItems(true);
-        }else{
-            manageGradeItems(gradesShownToken);
+        }
+        if(studentsShownToken){
+            manageStudentItems(true);
+        }
+        if(subjectsShownToken){
+            manageSubjectItems(true);
+        }
+        if (!gradesShownToken) {
+            manageGradeItems(false);
         }
     }//GEN-LAST:event_btnShowGradesActionPerformed
 
     private void btnShowStudentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowStudentsActionPerformed
         if(teachersShownToken){
-            manageStudentItems(studentsShownToken);
             manageTeachersItems(true);
-        }else{
-            manageStudentItems(studentsShownToken);
         }
+        if(gradesShownToken){
+            manageGradeItems(true);
+        }
+        if (subjectsShownToken){
+            manageSubjectItems(true);
+        }
+        if (!studentsShownToken) {
+            manageStudentItems(false);
+        }
+
     }//GEN-LAST:event_btnShowStudentsActionPerformed
 
     private void btnShowSubjectsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowSubjectsActionPerformed
         if(teachersShownToken){
-            manageSubjectItems(subjectsShownToken);
             manageTeachersItems(true);
-        }else{
-            manageSubjectItems(subjectsShownToken);
         }
+        if(studentsShownToken){
+            manageStudentItems(true);
+        }
+        if(gradesShownToken){
+            manageGradeItems(true);
+        }
+        if(!subjectsShownToken){
+            manageSubjectItems(false);
+        }
+
+
     }//GEN-LAST:event_btnShowSubjectsActionPerformed
 
     private void lblAdvertenciaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAdvertenciaMouseClicked
@@ -255,10 +278,16 @@ public class AdminMenu extends javax.swing.JFrame {
 
     private void btnShowTeachersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowTeachersActionPerformed
         if(studentsShownToken){
-            manageTeachersItems(teachersShownToken);
             manageStudentItems(true);
-        }else{
-            manageTeachersItems(teachersShownToken);
+        }
+        if(subjectsShownToken){
+            manageSubjectItems(true);
+        }
+        if(gradesShownToken){
+            manageGradeItems(true);
+        }
+        if (!teachersShownToken) {
+            manageTeachersItems(false);
         }
     }//GEN-LAST:event_btnShowTeachersActionPerformed
 
@@ -408,8 +437,8 @@ public class AdminMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUpdateSubjectActionPerformed
 
 
-    public void manageTeachersItems(boolean token){
-        if(!token){
+    public void manageTeachersItems(boolean token) {
+        if (!token) {
             btnAddTeacher = new javax.swing.JButton();
             btnAddTeacher.setBackground(new java.awt.Color(0, 102, 0));
             btnAddTeacher.setFont(new java.awt.Font("Lemon", 1, 14)); // NOI18N
@@ -417,7 +446,7 @@ public class AdminMenu extends javax.swing.JFrame {
             btnAddTeacher.setText("Añadir ");
             btnAddTeacher.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    btnAddTeacherActionPerformed(evt);
+                    // Your code here
                 }
             });
             getContentPane().add(btnAddTeacher);
@@ -430,12 +459,11 @@ public class AdminMenu extends javax.swing.JFrame {
             btnUpdateTeacher.setText("Actualizar");
             btnUpdateTeacher.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    btnUpdateTeacherActionPerformed(evt);
+                    // Your code here
                 }
             });
             getContentPane().add(btnUpdateTeacher);
             btnUpdateTeacher.setBounds(760, 340, 140, 40);
-
 
             btnDeleteTeacher = new javax.swing.JButton();
             btnDeleteTeacher.setBackground(new java.awt.Color(0, 102, 0));
@@ -444,7 +472,7 @@ public class AdminMenu extends javax.swing.JFrame {
             btnDeleteTeacher.setText("Borrar");
             btnDeleteTeacher.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    btnDeleteTeacherActionPerformed(evt);
+                    // Your code here
                 }
             });
             getContentPane().add(btnDeleteTeacher);
@@ -460,16 +488,14 @@ public class AdminMenu extends javax.swing.JFrame {
                             {null, null, null, null}
                     },
                     new String [] {
-                            "Matricula", "Nombre", "Edad", "Materias"
+                            "Nombre", "Instructor", "Semestre", "Cantidad de alumnos"
                     }
             ));
-
             jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
                     jTable1MouseClicked(evt);
                 }
             });
-
             jScrollPane1.setViewportView(jTable1);
 
             getContentPane().add(jScrollPane1);
@@ -479,15 +505,18 @@ public class AdminMenu extends javax.swing.JFrame {
 
             teachersShownToken = true;
         }else{
-            getContentPane().remove(btnAddTeacher);
-            getContentPane().remove(btnDeleteTeacher);
-            getContentPane().remove(btnUpdateTeacher);
-            getContentPane().remove(jScrollPane1);
-            getContentPane().remove(jTable1);
-
-            getContentPane().repaint();
-            teachersShownToken = false;
+            deleteTeacherItems();
         }
+    }
+
+    public void deleteTeacherItems(){
+        getContentPane().remove(btnAddTeacher);
+        getContentPane().remove(btnDeleteTeacher);
+        getContentPane().remove(btnUpdateTeacher);
+        getContentPane().remove(jScrollPane1);
+        getContentPane().remove(jTable1);
+        getContentPane().repaint();
+        teachersShownToken = false;
     }
 
     public void manageStudentItems(boolean token) {
@@ -502,9 +531,14 @@ public class AdminMenu extends javax.swing.JFrame {
                             {null, null, null, null}
                     },
                     new String [] {
-                            "Matricula", "Nombre", "Semestre", "Edad"
+                            "Matricula", "Nombre", "Edad", "Semestre"
                     }
             ));
+            studentsTable.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    studentsTableMouseClicked(evt);
+                }
+            });
             jScrollPane2.setViewportView(studentsTable);
 
             getContentPane().add(jScrollPane2);
@@ -517,7 +551,7 @@ public class AdminMenu extends javax.swing.JFrame {
             btnRemoveStudent.setText("Eliminar");
             btnRemoveStudent.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    btnRemoveStudentActionPerformed(evt);
+                    // Your code here
                 }
             });
             getContentPane().add(btnRemoveStudent);
@@ -530,7 +564,7 @@ public class AdminMenu extends javax.swing.JFrame {
             btnAddStudent.setText("Añadir");
             btnAddStudent.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    btnAddStudentActionPerformed(evt);
+                    // Your code here
                 }
             });
             getContentPane().add(btnAddStudent);
@@ -543,13 +577,7 @@ public class AdminMenu extends javax.swing.JFrame {
             btnUpdateStudent.setText("Actualizar");
             btnUpdateStudent.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    btnUpdateStudentActionPerformed(evt);
-                }
-            });
-
-            studentsTable.addMouseListener(new java.awt.event.MouseAdapter() {
-                public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    studentsTableMouseClicked(evt);
+                    // Your code here
                 }
             });
             getContentPane().add(btnUpdateStudent);
@@ -559,17 +587,21 @@ public class AdminMenu extends javax.swing.JFrame {
 
             studentsShownToken = true;
         } else {
-            getContentPane().remove(btnAddStudent);
-            getContentPane().remove(btnRemoveStudent);
-            getContentPane().remove(btnUpdateStudent);
-            getContentPane().remove(jScrollPane2);
-            getContentPane().repaint();
-
-            studentsShownToken = false;
+            deleteStudentItems();
         }
     }
 
-    public void manageSubjectItems(boolean token){
+    public void deleteStudentItems(){
+        getContentPane().remove(btnAddStudent);
+        getContentPane().remove(btnRemoveStudent);
+        getContentPane().remove(btnUpdateStudent);
+        getContentPane().remove(jScrollPane2);
+        getContentPane().remove(studentsTable);
+        getContentPane().repaint();
+        studentsShownToken = false;
+    }
+
+    public void manageSubjectItems(boolean token) {
         if (!token) {
             jScrollPane3 = new javax.swing.JScrollPane();
             subjectsTable = new javax.swing.JTable();
@@ -584,17 +616,15 @@ public class AdminMenu extends javax.swing.JFrame {
                             "Nombre", "Instructor", "Semestre", "Cantidad de alumnos"
                     }
             ));
-            jScrollPane3.setViewportView(subjectsTable);
-
             subjectsTable.addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
                     subjectsTableMouseClicked(evt);
                 }
             });
+            jScrollPane3.setViewportView(subjectsTable);
 
             getContentPane().add(jScrollPane3);
             jScrollPane3.setBounds(110, 230, 570, 406);
-
 
             btnAddSubject = new javax.swing.JButton();
             btnAddSubject.setBackground(new java.awt.Color(0, 102, 0));
@@ -603,7 +633,7 @@ public class AdminMenu extends javax.swing.JFrame {
             btnAddSubject.setText("Añadir");
             btnAddSubject.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    btnAddSubjectActionPerformed(evt);
+                    // Your code here
                 }
             });
             getContentPane().add(btnAddSubject);
@@ -616,24 +646,27 @@ public class AdminMenu extends javax.swing.JFrame {
             btnUpdateSubject.setText("Actualizar");
             btnUpdateSubject.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    btnUpdateSubjectActionPerformed(evt);
+                    // Your code here
                 }
             });
-
             getContentPane().add(btnUpdateSubject);
             btnUpdateSubject.setBounds(790, 400, 120, 40);
 
             seeSubjectsInformation();
 
-            studentsShownToken = true;
+            subjectsShownToken = true;
         } else {
-            getContentPane().remove(btnAddSubject);
-            getContentPane().remove(btnUpdateSubject);
-            getContentPane().remove(jScrollPane3);
-            getContentPane().repaint();
-
-            subjectsShownToken = false;
+            deleteSubjectItems();
         }
+    }
+
+    public void deleteSubjectItems(){
+        getContentPane().remove(btnAddSubject);
+        getContentPane().remove(btnUpdateSubject);
+        getContentPane().remove(jScrollPane3);
+        getContentPane().remove(subjectsTable);
+        getContentPane().repaint();
+        subjectsShownToken = false;
     }
 
     public void manageGradeItems(boolean token){
@@ -668,7 +701,7 @@ public class AdminMenu extends javax.swing.JFrame {
 
             cbGradesFilter.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    seeGradesInformation(cbGradesFilter.getSelectedItem().toString());
+                    getSubjectInformation(String.valueOf(cbGradesFilter.getSelectedItem()));
                 }
             });
 
@@ -686,17 +719,20 @@ public class AdminMenu extends javax.swing.JFrame {
             getContentPane().add(btnUpdateGrades);
             btnUpdateGrades.setBounds(790, 360, 120, 40);
 
-
+            chargeSubjectsCB();
             gradesShownToken = true;
         } else {
-            getContentPane().remove(btnUpdateGrades);
-            getContentPane().remove(jScrollPane4);
-            getContentPane().repaint();
-
-            subjectsShownToken = false;
+            deleteGradeItems();
         }
     }
 
+    public void deleteGradeItems(){
+        getContentPane().remove(btnUpdateGrades);
+        getContentPane().remove(jScrollPane4);
+        getContentPane().remove(cbGradesFilter);
+        getContentPane().repaint();
+        gradesShownToken = false;
+    }
 
     //Method to see the information of all the admin options
     public void seeTeacherInformation() {
@@ -768,60 +804,55 @@ public class AdminMenu extends javax.swing.JFrame {
         return dataRow;
     }
 
-    public void seeGradesInformation(String semester){
-        ((DefaultTableModel) gradesTable.getModel()).setRowCount(0);
-        ArrayList<String> studentsKeys = new ArrayList<>();
-        // "Alumno", "Materia", "Primer Parcial", "Segundo Parcial","Tercer Parcial"
-        try {
-            // State to read the studentSettings
-           JSONParser semesterParse = new JSONParser();
-           JSONObject semesterInformation = (JSONObject) semesterParse.parse(new FileReader(studentSettings));
-           JSONArray semesters = (JSONArray) semesterInformation.get("Estudiantes");
-           // State to read already filter grades
+    public void chargeSubjectsCB(){
+        try{
             JSONParser gradesParser = new JSONParser();
             JSONObject gradesInformation = (JSONObject) gradesParser.parse(new FileReader(subjectSettings));
             JSONArray grades = (JSONArray) gradesInformation.get("Materias");
+            String[] subjectsList = new String[grades.size()];
 
-            for(Object student : semesters){
-                JSONObject studentObject = (JSONObject) student;
-                String studentSemester = studentObject.get("Semestre").toString();
-                if(studentObject.get("Semestre").toString().equals(studentSemester)){
-                    studentsKeys.add((String) studentObject.get("Nombre"));
-                }
+            for(int i = 0; i < grades.size(); i++){
+                JSONObject grade = (JSONObject) grades.get(i);
+                subjectsList[i] = (String) grade.get("Nombre");
             }
+            cbGradesFilter.setModel(new DefaultComboBoxModel<>(subjectsList));
+        }catch (Exception e){
+            System.out.println("Error in line --> "+ e.getMessage());
+        }
+    }
 
-            if(studentsKeys.isEmpty()){
-                JOptionPane.showMessageDialog(this, "Something went wrong", "Error", JOptionPane.ERROR_MESSAGE);
-            }else{
-                for(String key: studentsKeys){
-                    for(Object grade : grades){
-                        JSONObject gradeObject = (JSONObject) grade;
-                        JSONArray students = (JSONArray) gradeObject.get("Alumnos");
-                        for(Object student : students){
-                            JSONObject studentObject = (JSONObject) student;
-                            if(studentObject.get("Nombre").toString().equals(key)){
-                                String[] dataRow = {
-                                        key,
-                                        (String) gradeObject.get("Nombre"),
-                                        String.valueOf(studentObject.get("PrimerParcial")),
-                                        String.valueOf(studentObject.get("SegundoParcial")),
-                                        String.valueOf(studentObject.get("TercerParcial"))
-                                };
-                                ((DefaultTableModel) gradesTable.getModel()).addRow(dataRow);
-                            }
+    public void getSubjectInformation(String currentSubject){
+        try(FileReader fr = new FileReader(subjectSettings)){
+            Object obj = new JSONParser().parse(fr);
+            //Information of parameters of the subject
+            JSONObject gradesInformation = (JSONObject) obj;
+            JSONArray grades = (JSONArray) gradesInformation.get("Materias");
+            //Information of the students
+            for(Object grade : grades) {
+                JSONObject gradeObject = (JSONObject) grade;
+                JSONArray students = (JSONArray) gradeObject.get("Alumnos");
+                if (gradeObject.get("Nombre").equals(currentSubject)) {
+                    ((DefaultTableModel) gradesTable.getModel()).setRowCount(0);
+                    for (Object student : students) {
+                        JSONObject studentObject = (JSONObject) student;
+                        Set<String> studentKeys = studentObject.keySet();
+                        for (String key : studentKeys) {
+                            JSONObject gradesArray = (JSONObject) studentObject.get(key);
+                            String[] dataRow = {
+                                    key,
+                                    (String) gradeObject.get("Nombre"),
+                                    String.valueOf(gradesArray.get("Primer Parcial")),
+                                    String.valueOf(gradesArray.get("Segundo Parcial")),
+                                    String.valueOf(gradesArray.get("Tercer Parcial"))};
+                            ((DefaultTableModel) gradesTable.getModel()).addRow(dataRow);
                         }
                     }
                 }
             }
-
-
-
-        } catch (Exception e) {
-            System.err.println("Error en " + e.getMessage());
+        }catch (Exception e) {
+            System.out.println("Error in line --> " + e.getMessage());
         }
     }
-
-
 
 
     /**
