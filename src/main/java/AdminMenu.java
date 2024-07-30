@@ -10,11 +10,20 @@ import org.json.simple.parser.JSONParser;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.ObjectStreamException;
+import java.io.PrintWriter;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import org.json.simple.parser.ParseException;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -63,7 +72,7 @@ public class AdminMenu extends javax.swing.JFrame {
 
 
 
-
+    DefaultTableModel dtm;
     /**
      * Creates new form AdminMenu
      */
@@ -77,6 +86,10 @@ public class AdminMenu extends javax.swing.JFrame {
             initComponents();
             lblNombre.setText(mainToken.getNombre());
         }
+        
+        AsignacionAlumnoSemestre();
+        
+
 
     }
 
@@ -434,9 +447,130 @@ public class AdminMenu extends javax.swing.JFrame {
 
     private void btnUpdateSubjectActionPerformed(java.awt.event.ActionEvent evt) {
 
+        try {
+            if(ValidarDatosCaracter()){
+                if(ValidarCalificaciones()){    
+                    JSONParser parse=new JSONParser();  
+                    JSONObject materias=(JSONObject) parse.parse(new FileReader("src/main/java/resources/materias.json"));
+                    JSONArray clases=(JSONArray) materias.get("Materias");
+
+                    for(Object obj:clases){
+                        JSONObject objMateria=(JSONObject) obj;
+                        int Semestre=Integer.parseInt(""+objMateria.get("Semestre"));
+                        if(objMateria.get("Nombre").equals(cbGradesFilter.getSelectedItem())){
+                            JSONArray Alumnos=(JSONArray) objMateria.get("Alumnos");
+                            JSONObject ConjuntoAlumnos=(JSONObject) Alumnos.get(0);
+
+                            switch(Semestre){
+                                case 1:ModificarCalificaciones(ConjuntoAlumnos, Semestre1,materias);break;
+                                case 2:ModificarCalificaciones(ConjuntoAlumnos, Semestre2,materias);break;
+                                case 3:ModificarCalificaciones(ConjuntoAlumnos, Semestre3,materias);break;
+                                case 4:ModificarCalificaciones(ConjuntoAlumnos, Semestre4,materias);break;                       
+                            }
+
+                        }
+
+                    }
+                }
+            }
+            
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(AdminMenu.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(AdminMenu.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(AdminMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnUpdateSubjectActionPerformed
+    
+    public void ModificarCalificaciones(JSONObject object,ArrayList<String>Array,JSONObject materias){
+        try{
+            for(int i=0;i<Array.size();i++){
+                JSONObject objIterador=(JSONObject) object.get(""+gradesTable.getValueAt(i,0));
+                objIterador.put("Primer Parcial",Integer.parseInt(""+gradesTable.getValueAt(i,2)));
+                objIterador.put("Segundo Parcial",Integer.parseInt(""+gradesTable.getValueAt(i,3)));
+                objIterador.put("Tercer Parcial",Integer.parseInt(""+gradesTable.getValueAt(i,4)));
+                
+            }
+            PrintWriter pw=new PrintWriter(new FileWriter("src/main/java/resources/materias.json"));
+            pw.println(materias.toJSONString());
+            pw.close();
+        }catch(Exception e){
 
-
+        }
+    }
+    
+    public boolean ValidarDatosCaracter(){
+        boolean x=true;
+        int a=0;
+        try{
+            for(int i=0;i<gradesTable.getRowCount();i++){
+                for(int j=2;j<gradesTable.getColumnCount();j++){
+                    System.out.println(gradesTable.getValueAt(i,j));                   
+                    a=Integer.parseInt(""+gradesTable.getValueAt(i,j));
+                }
+            }
+        }catch(Exception e){
+            x=false;
+            JOptionPane.showMessageDialog(null,"Error: Una de las calificaciones es un caracter o tiene decimales.");
+        }
+        
+        return x;
+    }
+    
+    public boolean ValidarCalificaciones(){
+        boolean x=true;
+        
+        for(int i=0;i<gradesTable.getRowCount();i++){
+            for(int j=2;j<gradesTable.getColumnCount();j++){
+                if((Integer.parseInt(""+gradesTable.getValueAt(i,j))<0) || (Integer.parseInt(""+gradesTable.getValueAt(i,j))>100)){
+                    x=false;
+                }
+            }
+        }
+        
+        if(x==false){
+            JOptionPane.showMessageDialog(null,"Error: Una de las calificaciones es mayor a 100 o menor a 0");
+        }
+        
+        return x;
+    }
+    
+    
+    ArrayList<String>Semestre1=new ArrayList<>();
+    ArrayList<String>Semestre2=new ArrayList<>();
+    ArrayList<String>Semestre3=new ArrayList<>();
+    ArrayList<String>Semestre4=new ArrayList<>();
+    
+    public void AsignacionAlumnoSemestre(){
+        try {
+            JSONParser parse=new JSONParser();
+            JSONObject alumnos=(JSONObject) parse.parse(new FileReader("src/main/java/resources/alumnos.json"));
+            JSONArray Estudiantes=(JSONArray) alumnos.get("Estudiantes");
+            
+            for(Object obj:Estudiantes){
+                JSONObject objEstudiantes=(JSONObject) obj;
+                int Semestre=Integer.parseInt(""+objEstudiantes.get("Semestre"));
+                
+                switch(Semestre){
+                    case 1:Semestre1.add(""+objEstudiantes.get("Nombre"));break;
+                    case 2:Semestre2.add(""+objEstudiantes.get("Nombre"));break;
+                    case 3:Semestre3.add(""+objEstudiantes.get("Nombre"));break;
+                    case 4:Semestre4.add(""+objEstudiantes.get("Nombre"));break;
+                }
+                
+            }
+            
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(AdminMenu.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(AdminMenu.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(AdminMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
     public void manageTeachersItems(boolean token) {
         if (!token) {
             btnAddTeacher = new javax.swing.JButton();
@@ -652,7 +786,7 @@ public class AdminMenu extends javax.swing.JFrame {
             btnUpdateSubject.setText("Actualizar");
             btnUpdateSubject.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    // Your code here
+                    btnUpdateSubjectActionPerformed();
                 }
             });
             getContentPane().add(btnUpdateSubject);
@@ -661,11 +795,133 @@ public class AdminMenu extends javax.swing.JFrame {
             seeSubjectsInformation();
 
             subjectsShownToken = true;
+            dtm=(DefaultTableModel) subjectsTable.getModel();
         } else {
             deleteSubjectItems();
         }
     }
 
+    private void btnUpdateSubjectActionPerformed(){
+        try{
+            JSONParser parser=new JSONParser();
+            JSONObject materias=(JSONObject) parser.parse(new FileReader("src/main/java/resources/materias.json"));
+            JSONArray arrayMaterias=(JSONArray) materias.get("Materias");
+            
+            JTextField txtRow=new JTextField();
+            JTextField txtNombreInstructor=new JTextField();
+            JTextField txtMateria=new JTextField();
+            
+            Object modelo[]={"Digite la fila comenzando desde 0 que desea modificar",txtRow,"Digite el nuevo instructor (En caso de no querer modificar el instructor deje el espacio en blanco)",txtNombreInstructor,"Digite la nueva materia (En caso de no querer modificar la materia deje el espacio en blanco)",txtMateria};
+            
+            JOptionPane.showConfirmDialog(null,modelo);
+            
+            
+            
+            
+            String InstructorActual=""+subjectsTable.getValueAt(Integer.parseInt(txtRow.getText()),1);
+            String MateriaActual=""+subjectsTable.getValueAt(Integer.parseInt(txtRow.getText()),0);
+            if(ValidarNombreInstructor(txtNombreInstructor.getText())==false){
+                if(txtNombreInstructor.getText().trim().isEmpty()){
+                    txtNombreInstructor.setText(InstructorActual);
+                }
+
+                if(txtMateria.getText().trim().isEmpty()){
+                    txtMateria.setText(MateriaActual);
+                }
+
+                for(Object obj:arrayMaterias){
+                    JSONObject objMateria=(JSONObject) obj;
+                    if(objMateria.get("Instructor").equals(InstructorActual)){
+                        objMateria.put("Instructor",txtNombreInstructor.getText());
+                    }
+                }
+
+                for(Object obj:arrayMaterias){
+                    JSONObject objMateria=(JSONObject) obj;
+                    if(objMateria.get("Nombre").equals(MateriaActual)){
+                        objMateria.put("Nombre",txtMateria.getText());
+                    }
+                }
+
+                PrintWriter pw=new PrintWriter(new FileWriter("src/main/java/resources/materias.json"));
+                pw.println(materias.toJSONString());
+                pw.close();
+
+                JSONObject profesores=(JSONObject) parser.parse(new FileReader("src/main/java/resources/profesores.json"));
+                JSONArray Docentes=(JSONArray) profesores.get("Docentes");
+
+                for(Object obj:Docentes){
+                    JSONObject objDocente=(JSONObject) obj;
+                    if(objDocente.get("Nombre").equals(InstructorActual)){
+                        objDocente.put("Nombre",txtNombreInstructor.getText());
+
+                    }
+                }
+
+                for(Object obj:Docentes){
+                    JSONObject objDocente=(JSONObject) obj;
+                    JSONObject objMateria=(JSONObject) objDocente.get("Materias");
+
+                    for(int i=0;i<2;i++){
+                        if(objMateria.get(""+i)!=null){    
+                            if(objMateria.get(""+i).equals(MateriaActual)){
+                                objMateria.put(""+i,txtMateria.getText());
+                            }
+                        }
+                    }
+
+                }
+
+                PrintWriter pw1=new PrintWriter(new FileWriter("src/main/java/resources/profesores.json"));
+                pw1.println(profesores.toJSONString());
+                pw1.close();
+                dtm.getDataVector().removeAllElements();
+                subjectsTable.updateUI();
+                ActualizarTablaMaterias(arrayMaterias);
+            }else{
+                JOptionPane.showMessageDialog(null,"Error: El nombre del instructor no puede tener numeros");
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null,"Error: El indice de la fila tiene que ser una numero entero positivo y el numero de fila no debe exceder el numero de filas de la tabla");
+        }
+        
+    }
+    
+    public void ActualizarTablaMaterias(JSONArray arrayMaterias){
+        String datos[]=new String[4];
+        
+        
+        for(Object obj:arrayMaterias){
+            JSONObject objMaterias=(JSONObject) obj;
+            String Nombre=""+objMaterias.get("Nombre");
+            String Instructor=""+objMaterias.get("Instructor");
+            int Semestre=Integer.parseInt(""+objMaterias.get("Semestre"));
+            int CantidadDeAlumnos=0;
+            
+            switch(Semestre){
+                case 1:CantidadDeAlumnos=Semestre1.size();break;
+                case 2:CantidadDeAlumnos=Semestre2.size();break;
+                case 3:CantidadDeAlumnos=Semestre3.size();break;
+                case 4:CantidadDeAlumnos=Semestre4.size();break;
+            }
+            
+            datos[0]=Nombre;
+            datos[1]=Instructor;
+            datos[2]=""+Semestre;
+            datos[3]=""+CantidadDeAlumnos;
+            dtm.addRow(datos);
+            
+        }
+        
+        
+    }
+    
+    public boolean ValidarNombreInstructor(String nombre){
+        Pattern patron=Pattern.compile("\\d+");
+        Matcher match=patron.matcher(nombre);
+        return match.find();
+    }
+    
     public void deleteSubjectItems(){
         getContentPane().remove(btnAddSubject);
         getContentPane().remove(btnUpdateSubject);
