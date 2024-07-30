@@ -716,7 +716,8 @@ public class AdminMenu extends javax.swing.JFrame {
             btnUpdateStudent.setText("Actualizar");
             btnUpdateStudent.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    // Your code here
+                    mainOperations.updateStudentInformation();
+                    seeStudentInformation();
                 }
             });
             getContentPane().add(btnUpdateStudent);

@@ -4,7 +4,7 @@ public interface AdminRepository {
     //Student operations
     void deleteStudent();
     void addNewStudent();
-    void updateStudentInformation(String name);
+    void updateStudentInformation();
     void updateStudentGrade(String name);
     void updateStudentSemester(String name);
     void seeStudentDetails(String matricula);

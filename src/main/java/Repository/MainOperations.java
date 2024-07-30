@@ -243,8 +243,125 @@ public class MainOperations implements AdminRepository{
     //-------------------------------
 
     @Override
-    public void updateStudentInformation(String name) {
+    public void updateStudentInformation() {
+        JPanel panel = new JPanel();
+        JLabel selectStudentLabel = new JLabel("Seleccione un alumno: ");
+        JComboBox<String> studentComboBox = new JComboBox<>();
+        ArrayList<String> studentsList = gettingStudents();
+        studentComboBox.addItem("Seleccione un alumno");
+        for (String student : studentsList) {
+            studentComboBox.addItem(student);
+        }
 
+        JLabel nameLabel = new JLabel("Nuevo Nombre: ");
+        JTextField nameField = new JTextField(20);
+        JLabel ageLabel = new JLabel("Nueva Edad: ");
+        JComboBox<String> ageComboBox = new JComboBox<>();
+        for (int i = 15; i <= 60; i++) {
+            ageComboBox.addItem(String.valueOf(i));
+        }
+        JLabel semesterLabel = new JLabel("Nuevo Semestre: ");
+        JComboBox<String> semesterComboBox = new JComboBox<>();
+        semesterComboBox.addItem("1");
+        semesterComboBox.addItem("2");
+        semesterComboBox.addItem("3");
+        semesterComboBox.addItem("4");
+
+        panel.add(selectStudentLabel);
+        panel.add(studentComboBox);
+        panel.add(nameLabel);
+        panel.add(nameField);
+        panel.add(ageLabel);
+        panel.add(ageComboBox);
+        panel.add(semesterLabel);
+        panel.add(semesterComboBox);
+
+        int result = JOptionPane.showConfirmDialog(null, panel, "Actualizar Información del Alumno", JOptionPane.OK_CANCEL_OPTION);
+        if (result == JOptionPane.OK_OPTION) {
+            String selectedStudent = (String) studentComboBox.getSelectedItem();
+            String newName = nameField.getText();
+            String newAge = String.valueOf(ageComboBox.getSelectedItem());
+            String newSemester = String.valueOf(semesterComboBox.getSelectedItem());
+
+            if (selectedStudent.equals("Seleccione un alumno") || newName.isEmpty() || newAge.isEmpty() || newSemester.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Error, campos no llenados correctamente", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                try {
+                    JSONParser parser = new JSONParser();
+                    JSONObject studentInformation = (JSONObject) parser.parse(new FileReader(studentSettings));
+                    JSONArray students = (JSONArray) studentInformation.get("Estudiantes");
+
+                    for (Object student : students) {
+                        JSONObject studentObject = (JSONObject) student;
+                        if (studentObject.get("Nombre").equals(selectedStudent)) {
+                            String oldSemester = String.valueOf(studentObject.get("Semestre"));
+                            studentObject.put("Nombre", newName);
+                            studentObject.put("Edad", Integer.parseInt(newAge));
+                            studentObject.put("Semestre", Integer.parseInt(newSemester));
+
+                            if (!oldSemester.equals(newSemester)) {
+                                updateStudentSemesterInSubjects(newName, oldSemester, newSemester);
+                            }
+                            break;
+                        }
+                    }
+
+                    try (FileWriter file = new FileWriter(studentSettings)) {
+                        file.write(studentInformation.toJSONString());
+                        file.flush();
+                    }
+
+                    JOptionPane.showMessageDialog(null, "Información del alumno actualizada con éxito", "Actualización exitosa", JOptionPane.INFORMATION_MESSAGE);
+                } catch (Exception e) {
+                    System.err.println("Error en updateStudentInformation --> " + e.getMessage());
+                }
+            }
+        }
+    }
+
+    private void updateStudentSemesterInSubjects(String studentName, String oldSemester, String newSemester) {
+        try {
+            JSONParser parser = new JSONParser();
+            JSONObject subjectInformation = (JSONObject) parser.parse(new FileReader(subjecSettings));
+            JSONArray subjects = (JSONArray) subjectInformation.get("Materias");
+
+            // Remove student from old semester subjects
+            for (Object subject : subjects) {
+                JSONObject subjectObject = (JSONObject) subject;
+                if (String.valueOf(subjectObject.get("Semestre")).equals(oldSemester)) {
+                    JSONArray alumnos = (JSONArray) subjectObject.get("Alumnos");
+                    for (Object alumno : alumnos) {
+                        JSONObject alumnoObject = (JSONObject) alumno;
+                        if (alumnoObject.containsKey(studentName)) {
+                            alumnoObject.remove(studentName);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            for (Object subject : subjects) {
+                JSONObject subjectObject = (JSONObject) subject;
+                if (String.valueOf(subjectObject.get("Semestre")).equals(newSemester)) {
+                    JSONArray alumnos = (JSONArray) subjectObject.get("Alumnos");
+                    JSONObject studentGrades = new JSONObject();
+                    studentGrades.put("Primer Parcial", 0);
+                    studentGrades.put("Segundo Parcial", 0);
+                    studentGrades.put("Tercer Parcial", 0);
+
+                    // Add the new student to the last JSONObject in the Alumnos array
+                    JSONObject lastAlumnosObject = (JSONObject) alumnos.get(alumnos.size() - 1);
+                    lastAlumnosObject.put(studentName, studentGrades);
+                }
+            }
+
+            try (FileWriter file = new FileWriter(subjecSettings)) {
+                file.write(subjectInformation.toJSONString());
+                file.flush();
+            }
+        } catch (Exception e) {
+            System.err.println("Error in updateStudentSemesterInSubjects --> " + e.getMessage());
+        }
     }
 
     @Override
