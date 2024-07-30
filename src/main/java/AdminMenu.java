@@ -432,7 +432,7 @@ public class AdminMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAddSubjectActionPerformed
 
-    private void btnUpdateSubjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateSubjectActionPerformed
+    private void btnUpdateSubjectActionPerformed(java.awt.event.ActionEvent evt) {
 
     }//GEN-LAST:event_btnUpdateSubjectActionPerformed
 
@@ -446,7 +446,8 @@ public class AdminMenu extends javax.swing.JFrame {
             btnAddTeacher.setText("Añadir ");
             btnAddTeacher.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    // Your code here
+                    mainOperations.addNewTeacher();
+                    seeTeacherInformation();
                 }
             });
             getContentPane().add(btnAddTeacher);
@@ -459,7 +460,8 @@ public class AdminMenu extends javax.swing.JFrame {
             btnUpdateTeacher.setText("Actualizar");
             btnUpdateTeacher.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    // Your code here
+                    mainOperations.updateTeacherInformation();
+                    seeTeacherInformation();
                 }
             });
             getContentPane().add(btnUpdateTeacher);
@@ -472,7 +474,8 @@ public class AdminMenu extends javax.swing.JFrame {
             btnDeleteTeacher.setText("Borrar");
             btnDeleteTeacher.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    // Your code here
+                    mainOperations.deleteTeacher();
+                    seeTeacherInformation();
                 }
             });
             getContentPane().add(btnDeleteTeacher);
@@ -488,7 +491,7 @@ public class AdminMenu extends javax.swing.JFrame {
                             {null, null, null, null}
                     },
                     new String [] {
-                            "Nombre", "Instructor", "Semestre", "Cantidad de alumnos"
+                            "Nombre", "Instructor", "Semestre", "Cantidad de materias"
                     }
             ));
             jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -499,7 +502,7 @@ public class AdminMenu extends javax.swing.JFrame {
             jScrollPane1.setViewportView(jTable1);
 
             getContentPane().add(jScrollPane1);
-            jScrollPane1.setBounds(180, 210, 456, 406);
+            jScrollPane1.setBounds(110, 230, 570, 406);
 
             seeTeacherInformation();
 
@@ -531,7 +534,7 @@ public class AdminMenu extends javax.swing.JFrame {
                             {null, null, null, null}
                     },
                     new String [] {
-                            "Matricula", "Nombre", "Edad", "Semestre"
+                            "Matricula", "Nombre", "Semestre", "Edad"
                     }
             ));
             studentsTable.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -551,7 +554,8 @@ public class AdminMenu extends javax.swing.JFrame {
             btnRemoveStudent.setText("Eliminar");
             btnRemoveStudent.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    // Your code here
+                    mainOperations.deleteStudent();
+                    seeStudentInformation();
                 }
             });
             getContentPane().add(btnRemoveStudent);
@@ -564,7 +568,8 @@ public class AdminMenu extends javax.swing.JFrame {
             btnAddStudent.setText("Añadir");
             btnAddStudent.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    // Your code here
+                    mainOperations.addNewStudent();
+                    seeStudentInformation();
                 }
             });
             getContentPane().add(btnAddStudent);
@@ -633,7 +638,8 @@ public class AdminMenu extends javax.swing.JFrame {
             btnAddSubject.setText("Añadir");
             btnAddSubject.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    // Your code here
+                    mainOperations.addNewSubject();
+                    seeSubjectsInformation();
                 }
             });
             getContentPane().add(btnAddSubject);

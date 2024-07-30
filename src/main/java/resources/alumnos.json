@@ -19,40 +19,40 @@
       "Edad": 22
     },
     {
-        "Matricula": "BR2020D237A",
-        "Nombre": "Bruce Wayne",
-        "Semestre": 4,
-        "Edad": 23
+      "Matricula": "BR2020D237A",
+      "Nombre": "Bruce Wayne",
+      "Semestre": 4,
+      "Edad": 23
     },
     {
-        "Matricula": "CL2020D238A",
-        "Nombre": "Clark Kent",
-        "Semestre": 1,
-        "Edad": 24
+      "Matricula": "CL2020D238A",
+      "Nombre": "Clark Kent",
+      "Semestre": 1,
+      "Edad": 24
     },
     {
-        "Matricula": "BA2020D239A",
-        "Nombre": "Barry Allen",
-        "Semestre": 2,
-        "Edad": 25
+      "Matricula": "BA2020D239A",
+      "Nombre": "Barry Allen",
+      "Semestre": 2,
+      "Edad": 25
     },
     {
-        "Matricula": "DI2020D240A",
-        "Nombre": "Diana Prince",
-        "Semestre": 3,
-        "Edad": 26
+      "Matricula": "DI2020D240A",
+      "Nombre": "Diana Prince",
+      "Semestre": 3,
+      "Edad": 26
     },
     {
-        "Matricula": "HA2020D241A",
-        "Nombre": "Hal Jordan",
-        "Semestre": 4,
-        "Edad": 27
+      "Matricula": "HA2020D241A",
+      "Nombre": "Hal Jordan",
+      "Semestre": 4,
+      "Edad": 27
     },
     {
-        "Matricula": "KA2020D242A",
-        "Nombre": "Kara Zor-Elr",
-        "Semestre": 1,
-        "Edad": 28
+      "Matricula": "KA2020D242A",
+      "Nombre": "Kara Zor-Elr",
+      "Semestre": 1,
+      "Edad": 28
     }
   ]
 }

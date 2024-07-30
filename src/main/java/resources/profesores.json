@@ -2,29 +2,29 @@
   "Author": "Cesar",
   "Docentes":[
     {
-        "Matricula": "CE2022MA450M",
-        "Nombre": "Cesar Gabriel Mariscal Ruiz",
-        "Edad": 25,
-        "Materias": {
-            "0": "Matematicas",
-            "1": "Fisica"
-          }
-    },
-        {
-       "Matricula": "BR2022MA702M",
-        "Nombre": "Bryan Omar Mayoral Gonzales",
-        "Edad": 30,
-        "Materias": {
-            "0": "Estructura archivos"
-        }
+      "Matricula": "CE2022MA450M",
+      "Nombre": "Cesar Gabriel Mariscal Ruiz",
+      "Edad": 25,
+      "Materias": {
+        "0": "Matematicas",
+        "1": "Fisica"
+      }
     },
     {
-        "Matricula": "JE2022PO187M",
-        "Nombre": "Jessica Ponce Aguilera",
-        "Edad": 27,
-        "Materias": {
-            "0": "Programación 2"
-        }
+      "Matricula": "BR2022MA702M",
+      "Nombre": "Bryan Omar Mayoral Gonzales",
+      "Edad": 30,
+      "Materias": {
+        "0": "Estructura archivos"
+      }
+    },
+    {
+      "Matricula": "JE2022PO187M",
+      "Nombre": "Jessica Ponce Aguilera",
+      "Edad": 27,
+      "Materias": {
+        "0": "Programación 2"
+      }
     },
     {
       "Matricula": "KE2022QU370M",

@@ -55,7 +55,7 @@
       "token": "alumno"
     },
     {
-     "Matricula": "DI2020D240A",
+      "Matricula": "DI2020D240A",
       "user": "diana123",
       "password": "prince123",
       "token": "alumno"
@@ -79,10 +79,10 @@
       "token": "admin"
     },
     {
-        "Matricula": "ED2015B110A",
-        "user": "edgar123",
-        "password": "barajas",
-        "token": "admin"
+      "Matricula": "ED2015B110A",
+      "user": "edgar123",
+      "password": "barajas",
+      "token": "admin"
     }
   ]
 }

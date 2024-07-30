@@ -2,7 +2,7 @@ package Repository;
 
 public interface AdminRepository {
     //Student operations
-    void deleteStudent(String name);
+    void deleteStudent();
     void addNewStudent();
     void updateStudentInformation(String name);
     void updateStudentGrade(String name);
@@ -10,16 +10,16 @@ public interface AdminRepository {
     void seeStudentDetails(String matricula);
 
     //Teacher operations
-    void deleteTeacher(String name);
+    void deleteTeacher();
     void addNewTeacher();
-    void updateTeacherInformation(String name);
+    void updateTeacherInformation();
     String[] seeTeacherInformation(String matricula);
     String generateMatricula(String name, String lastName, String registerYear, String key);
     void showTeacherDetails(String matricula);
 
     void showSubjectDetails(String subject);
 
-    //Admin operations
-    void addNewAdmin();
-    void updateAdminInformation(String name);
+    //Subject operations
+    void addNewSubject();
+
 }
